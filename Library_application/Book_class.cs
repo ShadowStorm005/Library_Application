@@ -24,7 +24,7 @@ namespace LibraryApplication
             get { return _title; }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                if (string.IsNullOrWhiteSpace(value)) // _title cannot be empty or whitespace
                 {
                     throw new ArgumentException("Title cannot be empty or whitespace.");
                 }
@@ -36,7 +36,14 @@ namespace LibraryApplication
             get { return _author; }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                foreach (char c in value)
+                {
+                    if (!char.IsLetter(c) && c != ' ') // _author cannot contain numbers or special characters
+                    {
+                        throw new ArgumentException("Author cannot contain numbers or special characters.");
+                    }
+                }
+                if (string.IsNullOrWhiteSpace(value)) // _author cannot be empty or whitespace
                 {
                     throw new ArgumentException("Author cannot be empty or whitespace.");
                 }
@@ -48,6 +55,9 @@ namespace LibraryApplication
             get { return _isbn; }
             set
             {
+                // ISBN must be a 13-digit number without any separators
+                /* Add when implementing the ISBN validation: Check so that the ISBN is not already in use.
+                 */
                 if (string.IsNullOrWhiteSpace(value) || value.Length != 13 || !int.TryParse(value, out _))
                 {
                     throw new ArgumentException("ISBN must be a 13-digit number without any separators.");
@@ -62,13 +72,17 @@ namespace LibraryApplication
         }
 
         // Method to loan the book
-        internal void Loan()
+        internal bool Borrow()
         {
             if (!IsAvailable)
             {
-                throw new InvalidOperationException("Book is not available to loan.");
+                return false; // Book is not available for borrowing
             }
-            IsAvailable = false;
+            else
+            {
+                IsAvailable = false;
+                return true; // Book is successfully borrowed
+            }
         }
         // Method to return the book
         internal void Return()
