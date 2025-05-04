@@ -6,11 +6,11 @@ namespace LibraryApplication
     internal class Customer
     {
         private string _name;
-        private int _id;
+        private string _id; // 6-digit number
         private List<Book> _borrowedBooks;
 
         // Constructor
-        internal Customer(string name, int id)
+        internal Customer(string name, string id)
         {
             Name = name;
             ID = id;
@@ -37,14 +37,21 @@ namespace LibraryApplication
                 _name = value;
             }
         }
-        internal int ID
+        internal string ID
         {
             get { return _id; }
             set
             {
-                if (value <= 0) // _id must be a positive integer
+                if (value.Length != 6 || !int.TryParse(value, out _)) // _id must be a 6-digit number
                 {
-                    throw new ArgumentException("ID must be a positive integer.");
+                    throw new ArgumentException("ID must be a 6-digit number.");
+                }
+                foreach (Customer customer in LibraryLogic.Instance.Customers)
+                {
+                    if (customer.ID == value) // Check if the ID already is in use
+                    {
+                        throw new ArgumentException("ID already in use.");
+                    }
                 }
                 _id = value;
             }
@@ -100,5 +107,17 @@ namespace LibraryApplication
         {
             return BorrowedBooks; // Return the list of borrowed books
         }
-    }
+        // Method to get the customer's information
+        internal List<string> GetDetails()
+        {
+            List<string> info = new List<string>();
+            info.Add($"Name: {Name}");
+            info.Add($"ID: {ID}");
+            info.Add("Borrowed Books:");
+            foreach (Book book in BorrowedBooks)
+            {
+                info.Add($"- {book.Title} by {book.Author} (ISBN: {book.ISBN})");
+            }
+            return info; // Return the customer's information
+        }
 }

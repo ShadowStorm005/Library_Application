@@ -56,11 +56,16 @@ namespace LibraryApplication
             set
             {
                 // ISBN must be a 13-digit number without any separators
-                /* Add when implementing the ISBN validation: Check so that the ISBN is not already in use.
-                 */
                 if (string.IsNullOrWhiteSpace(value) || value.Length != 13 || !int.TryParse(value, out _))
                 {
                     throw new ArgumentException("ISBN must be a 13-digit number without any separators.");
+                }
+                foreach (Book book in LibraryLogic.Instance.AllBooks) // Check if the ISBN already is in use
+                {
+                    if (book.ISBN == value)
+                    {
+                        throw new ArgumentException("ISBN already exists.");
+                    }
                 }
                 _isbn = value;
             }

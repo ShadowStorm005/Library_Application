@@ -121,6 +121,7 @@
     </Compile>
     <Compile Include="Book_class.cs" />
     <Compile Include="Customer_class.cs" />
+    <Compile Include="LibraryLogic_class.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
