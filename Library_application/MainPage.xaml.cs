@@ -47,6 +47,10 @@ namespace Library_application
                 {
                     RemoveBookButton_Click(sender, e);
                 }
+                if (RegisterNewCustomerGrid.Visibility == Visibility.Visible)
+                {
+                    RegisterNewCustomerButton_Click(sender, e);
+                }
                 // Show the specified grid
                 grid.Visibility = Visibility.Visible;
             }
@@ -126,6 +130,55 @@ namespace Library_application
             catch (ArgumentException ex)
             {
                 // Display an error message if the error raising value is invalid
+                var error = new Windows.UI.Popups.MessageDialog(ex.Message, "Error");
+                _ = error.ShowAsync();
+            }
+            catch (Exception ex)
+            {
+                // Display a generic error message for any other exceptions
+                var error = new Windows.UI.Popups.MessageDialog("An unexpected error occurred: " + ex.Message, "Error");
+                _ = error.ShowAsync();
+            }
+        }
+
+        // RegisterNewCustomerButton_Click event handler
+        private void RegisterNewCustomerButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Toggle the visibility of the RegisterNewCustomerGrid
+            ToggleGridVisibility(RegisterNewCustomerGrid, sender, e);
+            // Clear the input fields
+            NewCustomerNameTextBox.Text = string.Empty;
+            NewCustomerIDTextBox.Text = string.Empty;
+        }
+        // AddNewCustomerToLibraryButton_Click event handler
+        private void AddNewCustomerToLibraryButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                libraryLogic.AddCustomer(
+                    NewCustomerNameTextBox.Text,
+                    NewCustomerIDTextBox.Text);
+                // Display a success message
+                var successMessage = new Windows.UI.Popups.MessageDialog("Customer added successfully!", "Success");
+                _ = successMessage.ShowAsync();
+                // Hide the RegisterNewCustomerGrid and clear the input fields
+                RegisterNewCustomerButton_Click(sender, e);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                // Display an error message if the error raising value is out of range
+                var error = new Windows.UI.Popups.MessageDialog(ex.ParamName, "Error");
+                _ = error.ShowAsync();
+            }
+            catch (ArgumentException ex)
+            {
+                // Display an error message if the error raising value is invalid
+                var error = new Windows.UI.Popups.MessageDialog(ex.Message, "Error");
+                _ = error.ShowAsync();
+            }
+            catch (FormatException ex)
+            {
+                // Display an error message if the format of the input is incorrect
                 var error = new Windows.UI.Popups.MessageDialog(ex.Message, "Error");
                 _ = error.ShowAsync();
             }

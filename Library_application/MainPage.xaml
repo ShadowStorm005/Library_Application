@@ -28,11 +28,11 @@
             <TextBlock x:Name="TitleText" 
                        HorizontalAlignment="Center" 
                        TextWrapping="Wrap" 
-                       Text="Welcome to the Library Management Application!" 
+                       Text="Welcome To The Library Management Application!" 
                        VerticalAlignment="Center"
                        Foreground="#FFFAFAFA"/>
             <Button x:Name="RegisterNewBookButton" 
-                    Content="Register a New Book to The Library" 
+                    Content="Register a New Book To The Library" 
                     Grid.Row="1" 
                     HorizontalAlignment="Center"
                     Background="#FF3D3D3D" 
@@ -48,12 +48,13 @@
                     Foreground="#FFFAFAFA" 
                     Click="RemoveBookButton_Click"/>
             <Button x:Name="RegisterNewCustomerButton" 
-                    Content="Register a New Customer to To Library" 
+                    Content="Register a New Customer To The Library" 
                     Grid.Row="3" 
                     HorizontalAlignment="Center"
                     Background="#FF3D3D3D" 
                     BorderBrush="#FF666666" 
-                    Foreground="#FFFAFAFA"/>
+                    Foreground="#FFFAFAFA" 
+                    Click="RegisterNewCustomerButton_Click"/>
             <Button x:Name="RemoveCustomerButton" 
                     Content="Remove a Customer From The Library" 
                     Grid.Row="4" 
@@ -144,7 +145,7 @@
                     Foreground="#FFFAFAFA" 
                     Click="AddNewBookToLibraryButton_Click"/>
         </Grid>
-        <Grid x:Name="RemoveBookGrid" Grid.Column="1">
+        <Grid x:Name="RemoveBookGrid" Grid.Column="1" Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition Height="3*"/>
@@ -175,6 +176,49 @@
                     BorderBrush="#FF666666" 
                     Foreground="#FFFAFAFA" 
                     Click="RemoveBookFromLibraryButton_Click"/>
+        </Grid>
+        <Grid x:Name="RegisterNewCustomerGrid" Grid.Column="1" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <TextBlock HorizontalAlignment="Center" 
+                       TextWrapping="Wrap" 
+                       Text="Register a New Customer" 
+                       VerticalAlignment="Center"
+                       Foreground="#FFFAFAFA"/>
+            <TextBox x:Name="NewCustomerNameTextBox" 
+                     HorizontalAlignment="Center" 
+                     Grid.Row="2" 
+                     TextWrapping="Wrap" 
+                     VerticalAlignment="Center"
+                     Background="#FF3D3D3D" 
+                     BorderBrush="#FF666666" 
+                     Foreground="#FFFAFAFA" 
+                     PlaceholderText="Enter The Name Of The New Customer" 
+                     PlaceholderForeground="#FFFAFAFA"/>
+            <TextBox x:Name="NewCustomerIDTextBox" 
+                     HorizontalAlignment="Center" 
+                     Grid.Row="3" 
+                     TextWrapping="Wrap" 
+                     VerticalAlignment="Center"
+                     Background="#FF3D3D3D" 
+                     BorderBrush="#FF666666" 
+                     Foreground="#FFFAFAFA" 
+                     PlaceholderText="Enter The ID Of The New Customer" 
+                     PlaceholderForeground="#FFFAFAFA"/>
+            <Button x:Name="AddNewCustomerToLibraryButton" 
+                    Content="Register The Customer To The Library" 
+                    Grid.Row="4" 
+                    HorizontalAlignment="Center"
+                    Background="#FF3D3D3D" 
+                    BorderBrush="#FF666666" 
+                    Foreground="#FFFAFAFA" 
+                    Click="AddNewCustomerToLibraryButton_Click"/>
         </Grid>
     </Grid>
 </Page>

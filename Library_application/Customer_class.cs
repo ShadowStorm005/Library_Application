@@ -27,7 +27,7 @@ namespace Library_application
                 {
                     if (!char.IsLetter(c) && c != ' ') // _name cannot contain numbers or special characters
                     {
-                        throw new ArgumentException("Name cannot contain numbers or special characters.");
+                        throw new FormatException("Name cannot contain numbers or special characters.");
                     }
                 }
                 if (string.IsNullOrWhiteSpace(value)) // _name cannot be empty or whitespace
@@ -44,7 +44,7 @@ namespace Library_application
             {
                 if (value.Length != 6 || !int.TryParse(value, out _)) // _id must be a 6-digit number
                 {
-                    throw new ArgumentException("ID must be a 6-digit number.");
+                    throw new ArgumentOutOfRangeException("ID must be a 6-digit number.");
                 }
                 foreach (Customer customer in LibraryLogic.Instance.Customers)
                 {
