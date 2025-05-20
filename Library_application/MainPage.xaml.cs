@@ -51,6 +51,10 @@ namespace Library_application
                 {
                     RegisterNewCustomerButton_Click(sender, e);
                 }
+                if (RemoveCustomerGrid.Visibility == Visibility.Visible)
+                {
+                    RemoveCustomerButton_Click(sender, e);
+                }
                 // Show the specified grid
                 grid.Visibility = Visibility.Visible;
             }
@@ -179,6 +183,40 @@ namespace Library_application
             catch (FormatException ex)
             {
                 // Display an error message if the format of the input is incorrect
+                var error = new Windows.UI.Popups.MessageDialog(ex.Message, "Error");
+                _ = error.ShowAsync();
+            }
+            catch (Exception ex)
+            {
+                // Display a generic error message for any other exceptions
+                var error = new Windows.UI.Popups.MessageDialog("An unexpected error occurred: " + ex.Message, "Error");
+                _ = error.ShowAsync();
+            }
+        }
+
+        // RemoveCustomerButton_Click event handler
+        private void RemoveCustomerButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Toggle the visibility of the RemoveCustomerGrid
+            ToggleGridVisibility(RemoveCustomerGrid, sender, e);
+            // Clear the input fields
+            RemoveCustomerIDTextBox.Text = string.Empty;
+        }
+        // RemoveCustomerFromLibraryButton_Click event handler
+        private void RemoveCustomerFromLibraryButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                libraryLogic.RemoveCustomer(RemoveCustomerIDTextBox.Text);
+                // Display a success message
+                var successMessage = new Windows.UI.Popups.MessageDialog("Customer removed successfully!", "Success");
+                _ = successMessage.ShowAsync();
+                // Hide the RemoveCustomerGrid and clear the input fields
+                RemoveCustomerButton_Click(sender, e);
+            }
+            catch (ArgumentException ex)
+            {
+                // Display an error message if the error raising value is invalid
                 var error = new Windows.UI.Popups.MessageDialog(ex.Message, "Error");
                 _ = error.ShowAsync();
             }

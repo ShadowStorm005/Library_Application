@@ -126,9 +126,13 @@ namespace Library_application
             {
                 Customers.Remove(customerToRemove); // Remove the customer from the list of all customers
             }
-            else
+            else if (customerToRemove == null)
             {
-                throw new ArgumentException("Customer not found or has borrowed books.");
+                throw new ArgumentException("Customer not found.");
+            }
+            else if (customerToRemove.BorrowedBooks.Count > 0)
+            {
+                throw new ArgumentException("Customer has borrowed books and cannot be removed.");
             }
         }
         // Method to get info about a specified book
