@@ -37,7 +37,8 @@
                     HorizontalAlignment="Center"
                     Background="#FF3D3D3D" 
                     BorderBrush="#FF666666" 
-                    Foreground="#FFFAFAFA"/>
+                    Foreground="#FFFAFAFA" 
+                    Click="RegisterNewBookButton_Click"/>
             <Button x:Name="RemoveBookButton" 
                     Content="Remove a Book From The Library" 
                     Grid.Row="2" 
@@ -87,6 +88,60 @@
                     Background="#FF3D3D3D" 
                     BorderBrush="#FF666666" 
                     Foreground="#FFFAFAFA"/>
+        </Grid>
+        <Grid x:Name="RegisterNewBookGrid" Grid.Column="1" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock HorizontalAlignment="Center" 
+                       TextWrapping="Wrap" 
+                       Text="Register a New Book To The Library" 
+                       VerticalAlignment="Center"
+                       Foreground="#FFFAFAFA"/>
+            <TextBox x:Name="NewBookTitleTextBox" 
+                     HorizontalAlignment="Center" 
+                     Grid.Row="2" 
+                     TextWrapping="Wrap" 
+                     VerticalAlignment="Center"
+                     Background="#FF3D3D3D" 
+                     BorderBrush="#FF666666" 
+                     Foreground="#FFFAFAFA" 
+                     PlaceholderText="Enter The Title Of The New Book" 
+                     PlaceholderForeground="#FFFAFAFA"/>
+            <TextBox x:Name="NewBookAuthorTextBox" 
+                     HorizontalAlignment="Center" 
+                     Grid.Row="3" 
+                     TextWrapping="Wrap" 
+                     VerticalAlignment="Center"
+                     Background="#FF3D3D3D" 
+                     BorderBrush="#FF666666" 
+                     Foreground="#FFFAFAFA" 
+                     PlaceholderText="Enter The Author Of The New Book" 
+                     PlaceholderForeground="#FFFAFAFA"/>
+            <TextBox x:Name="NewBookISBNTextBox" 
+                     HorizontalAlignment="Center" 
+                     Grid.Row="4" 
+                     TextWrapping="Wrap" 
+                     VerticalAlignment="Center"
+                     Background="#FF3D3D3D" 
+                     BorderBrush="#FF666666" 
+                     Foreground="#FFFAFAFA" 
+                     PlaceholderText="Enter a Unique ISBN Number For The New Book" 
+                     PlaceholderForeground="#FFFAFAFA"/>
+            <Button x:Name="AddNewBookToLibraryButton" 
+                    Content="Register The Book To The Library" 
+                    Grid.Row="5" 
+                    HorizontalAlignment="Center"
+                    Background="#FF3D3D3D" 
+                    BorderBrush="#FF666666" 
+                    Foreground="#FFFAFAFA" 
+                    Click="AddNewBookToLibraryButton_Click"/>
         </Grid>
     </Grid>
 </Page>

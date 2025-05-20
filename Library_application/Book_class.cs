@@ -40,7 +40,7 @@ namespace Library_application
                 {
                     if (!char.IsLetter(c) && c != ' ') // _author cannot contain numbers or special characters
                     {
-                        throw new ArgumentException("Author cannot contain numbers or special characters.");
+                        throw new FormatException("Author cannot contain numbers or special characters.");
                     }
                 }
                 if (string.IsNullOrWhiteSpace(value)) // _author cannot be empty or whitespace
@@ -58,7 +58,7 @@ namespace Library_application
                 // ISBN must be a 13-digit number without any separators
                 if (string.IsNullOrWhiteSpace(value) || value.Length != 13 || !int.TryParse(value, out _))
                 {
-                    throw new ArgumentException("ISBN must be a 13-digit number without any separators.");
+                    throw new ArgumentOutOfRangeException("ISBN must be a 13-digit number without any separators.");
                 }
                 foreach (Book book in LibraryLogic.Instance.AllBooks) // Check if the ISBN already is in use
                 {

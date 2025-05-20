@@ -27,5 +27,76 @@ namespace Library_application
         {
             this.InitializeComponent();
         }
+
+        // Method to toggle the visibility of a given grid and make sure the other grids are hidden
+        private void ToggleGridVisibility(Grid grid, object sender, RoutedEventArgs e)
+        {
+            // Toggle the visibility of the specified grid
+            if (grid.Visibility == Visibility.Visible)
+            {
+                grid.Visibility = Visibility.Collapsed;
+            }
+            else // Make sure that only one grid is visible at a time
+            {
+                // Hide any other visible grids
+                if (RegisterNewBookGrid.Visibility == Visibility.Visible)
+                {
+                    RegisterNewBookButton_Click(sender, e);
+                }
+                // Show the specified grid
+                grid.Visibility = Visibility.Visible;
+            }
+        }
+
+        // RegisterNewBookButton_Click event handler
+        private void RegisterNewBookButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Toggle the visibility of the RegisterNewBookGrid
+            ToggleGridVisibility(RegisterNewBookGrid, sender, e);
+            // Clear the input fields
+            NewBookTitleTextBox.Text = string.Empty;
+            NewBookAuthorTextBox.Text = string.Empty;
+            NewBookISBNTextBox.Text = string.Empty;
+        }
+        // AddNewBookToLibraryButton_Click event handler
+        private void AddNewBookToLibraryButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                libraryLogic.AddBook(
+                    NewBookTitleTextBox.Text, 
+                    NewBookAuthorTextBox.Text, 
+                    NewBookISBNTextBox.Text);
+                // Dislpay a success message
+                var successMessage = new Windows.UI.Popups.MessageDialog("Book added successfully!", "Success");
+                _ = successMessage.ShowAsync();
+                // Hide the RegisterNewBookGrid and clear the input fields
+                RegisterNewBookButton_Click(sender, e);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                // Display an error message if the error raising value is out of range
+                var error = new Windows.UI.Popups.MessageDialog(ex.ParamName, "Error");
+                _ = error.ShowAsync();
+            }
+            catch (ArgumentException ex)
+            {
+                // Display an error message if the error raising value is invalid
+                var error = new Windows.UI.Popups.MessageDialog(ex.Message, "Error");
+                _ = error.ShowAsync();
+            }
+            catch (FormatException ex)
+            {
+                // Display an error message if the format of the input is incorrect
+                var error = new Windows.UI.Popups.MessageDialog(ex.Message, "Error");
+                _ = error.ShowAsync();
+            }
+            catch (Exception ex)
+            {
+                // Display a generic error message for any other exceptions
+                var error = new Windows.UI.Popups.MessageDialog("An unexpected error occurred: " + ex.Message, "Error");
+                _ = error.ShowAsync();
+            }
+        }
     }
 }
