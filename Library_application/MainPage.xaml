@@ -45,7 +45,8 @@
                     HorizontalAlignment="Center"
                     Background="#FF3D3D3D" 
                     BorderBrush="#FF666666" 
-                    Foreground="#FFFAFAFA"/>
+                    Foreground="#FFFAFAFA" 
+                    Click="RemoveBookButton_Click"/>
             <Button x:Name="RegisterNewCustomerButton" 
                     Content="Register a New Customer to To Library" 
                     Grid.Row="3" 
@@ -142,6 +143,38 @@
                     BorderBrush="#FF666666" 
                     Foreground="#FFFAFAFA" 
                     Click="AddNewBookToLibraryButton_Click"/>
+        </Grid>
+        <Grid x:Name="RemoveBookGrid" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <TextBlock HorizontalAlignment="Center" 
+                       TextWrapping="Wrap" 
+                       Text="Remove a Book From The Library" 
+                       VerticalAlignment="Center"
+                       Foreground="#FFFAFAFA"/>
+            <TextBox x:Name="RemoveBookISBNTextBox" 
+                     HorizontalAlignment="Center" 
+                     Grid.Row="2" 
+                     TextWrapping="Wrap" 
+                     VerticalAlignment="Center"
+                     Background="#FF3D3D3D" 
+                     BorderBrush="#FF666666" 
+                     Foreground="#FFFAFAFA" 
+                     PlaceholderText="Enter The ISBN Of The Book To Be Removed" 
+                     PlaceholderForeground="#FFFAFAFA"/>
+            <Button x:Name="RemoveBookFromLibraryButton" 
+                    Content="Remove The Book From The Library" 
+                    Grid.Row="3" 
+                    HorizontalAlignment="Center"
+                    Background="#FF3D3D3D" 
+                    BorderBrush="#FF666666" 
+                    Foreground="#FFFAFAFA" 
+                    Click="RemoveBookFromLibraryButton_Click"/>
         </Grid>
     </Grid>
 </Page>

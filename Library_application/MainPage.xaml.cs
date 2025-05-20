@@ -43,6 +43,10 @@ namespace Library_application
                 {
                     RegisterNewBookButton_Click(sender, e);
                 }
+                if (RemoveBookGrid.Visibility == Visibility.Visible)
+                {
+                    RemoveBookButton_Click(sender, e);
+                }
                 // Show the specified grid
                 grid.Visibility = Visibility.Visible;
             }
@@ -88,6 +92,40 @@ namespace Library_application
             catch (FormatException ex)
             {
                 // Display an error message if the format of the input is incorrect
+                var error = new Windows.UI.Popups.MessageDialog(ex.Message, "Error");
+                _ = error.ShowAsync();
+            }
+            catch (Exception ex)
+            {
+                // Display a generic error message for any other exceptions
+                var error = new Windows.UI.Popups.MessageDialog("An unexpected error occurred: " + ex.Message, "Error");
+                _ = error.ShowAsync();
+            }
+        }
+
+        // RemoveBookButton_Click event handler
+        private void RemoveBookButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Toggle the visibility of the RemoveBookGrid
+            ToggleGridVisibility(RemoveBookGrid, sender, e);
+            // Clear the input fields
+            RemoveBookISBNTextBox.Text = string.Empty;
+        }
+        // RemoveBookFromLibraryButton_Click event handler
+        private void RemoveBookFromLibraryButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                libraryLogic.RemoveBook(RemoveBookISBNTextBox.Text);
+                // Display a success message
+                var successMessage = new Windows.UI.Popups.MessageDialog("Book removed successfully!", "Success");
+                _ = successMessage.ShowAsync();
+                // Hide the RemoveBookGrid and clear the input fields
+                RemoveBookButton_Click(sender, e);
+            }
+            catch (ArgumentException ex)
+            {
+                // Display an error message if the error raising value is invalid
                 var error = new Windows.UI.Popups.MessageDialog(ex.Message, "Error");
                 _ = error.ShowAsync();
             }

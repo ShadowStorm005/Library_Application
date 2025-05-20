@@ -82,7 +82,7 @@ namespace Library_application
             }
             else
             {
-                throw new ArgumentException("Book not found.");
+                throw new ArgumentException("Book not found, or not avalible.");
             }
         }
         // Method to borrow a book to a specified customer
