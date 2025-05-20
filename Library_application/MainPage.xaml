@@ -8,7 +8,85 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-
+    <Grid Background="#FF1A1A1A">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="MainMenuGrid" Grid.Column="0" Background="#FF2E2E2E">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="TitleText" 
+                       HorizontalAlignment="Center" 
+                       TextWrapping="Wrap" 
+                       Text="Welcome to the Library Management Application!" 
+                       VerticalAlignment="Center"
+                       Foreground="#FFFAFAFA"/>
+            <Button x:Name="RegisterNewBookButton" 
+                    Content="Register a New Book to The Library" 
+                    Grid.Row="1" 
+                    HorizontalAlignment="Center"
+                    Background="#FF3D3D3D" 
+                    BorderBrush="#FF666666" 
+                    Foreground="#FFFAFAFA"/>
+            <Button x:Name="RemoveBookButton" 
+                    Content="Remove a Book From The Library" 
+                    Grid.Row="2" 
+                    HorizontalAlignment="Center"
+                    Background="#FF3D3D3D" 
+                    BorderBrush="#FF666666" 
+                    Foreground="#FFFAFAFA"/>
+            <Button x:Name="RegisterNewCustomerButton" 
+                    Content="Register a New Customer to To Library" 
+                    Grid.Row="3" 
+                    HorizontalAlignment="Center"
+                    Background="#FF3D3D3D" 
+                    BorderBrush="#FF666666" 
+                    Foreground="#FFFAFAFA"/>
+            <Button x:Name="RemoveCustomerButton" 
+                    Content="Remove a Customer From The Library" 
+                    Grid.Row="4" 
+                    HorizontalAlignment="Center"
+                    Background="#FF3D3D3D" 
+                    BorderBrush="#FF666666" 
+                    Foreground="#FFFAFAFA"/>
+            <Button x:Name="LendBookToCustomerButton" 
+                    Content="Lend Out a Book To a Customer" 
+                    Grid.Row="5" 
+                    HorizontalAlignment="Center"
+                    Background="#FF3D3D3D" 
+                    BorderBrush="#FF666666" 
+                    Foreground="#FFFAFAFA"/>
+            <Button x:Name="ReturnBookFromCustomerButton" 
+                    Content="Return a Book From a Customer" 
+                    Grid.Row="6" 
+                    HorizontalAlignment="Center"
+                    Background="#FF3D3D3D" 
+                    BorderBrush="#FF666666" 
+                    Foreground="#FFFAFAFA"/>
+            <Button x:Name="ShowInformationOnCustomersButton" 
+                    Content="Show Information On The Customers" 
+                    Grid.Row="7" 
+                    HorizontalAlignment="Center"
+                    Background="#FF3D3D3D" 
+                    BorderBrush="#FF666666" 
+                    Foreground="#FFFAFAFA"/>
+            <Button x:Name="ExitButton" 
+                    Content="Exit" 
+                    Grid.Row="8" 
+                    HorizontalAlignment="Center"
+                    Background="#FF3D3D3D" 
+                    BorderBrush="#FF666666" 
+                    Foreground="#FFFAFAFA"/>
+        </Grid>
     </Grid>
 </Page>

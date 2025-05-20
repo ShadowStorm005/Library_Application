@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LibraryApplication
+namespace Library_application
 {
     internal class Customer
     {
@@ -120,4 +120,5 @@ namespace LibraryApplication
             }
             return info; // Return the customer's information
         }
+    }
 }

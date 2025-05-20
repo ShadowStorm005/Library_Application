@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace LibraryApplication
+namespace Library_application
 {
     internal class LibraryLogic
     {

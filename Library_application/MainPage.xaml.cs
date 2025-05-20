@@ -22,6 +22,7 @@ namespace Library_application
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private readonly LibraryLogic libraryLogic = LibraryLogic.Instance;
         public MainPage()
         {
             this.InitializeComponent();

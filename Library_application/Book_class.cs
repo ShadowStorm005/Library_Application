@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LibraryApplication
+namespace Library_application
 {
     internal class  Book
     {
