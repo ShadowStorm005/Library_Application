@@ -42,7 +42,8 @@ namespace Library_application
             get { return _id; }
             set
             {
-                if (value.Length != 6 || !uint.TryParse(value, out _)) // _id must be a 6-digit number
+                // _id must be a 6-digit number
+                if (value.Length != 6 || !uint.TryParse(value, out _) || value.StartsWith("-") || value.StartsWith("+"))
                 {
                     throw new ArgumentOutOfRangeException("ID must be a 6-digit number.");
                 }
@@ -119,6 +120,11 @@ namespace Library_application
                 info.Add($"- {book.Title} by {book.Author} (ISBN: {book.ISBN})");
             }
             return info; // Return the customer's information
+        }
+        // Method to determine how the customer is represented as a string
+        public override string ToString()
+        {
+            return $"{Name}, ID: {ID}, Number Of Borrowed Books: {BorrowedBooks.Count}";
         }
     }
 }

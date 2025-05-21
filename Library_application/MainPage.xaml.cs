@@ -63,6 +63,10 @@ namespace Library_application
                 {
                     ReturnBookFromCustomerButton_Click(sender, e);
                 }
+                if (ShowInformationOnCustomersGrid.Visibility == Visibility.Visible)
+                {
+                    ShowInformationOnCustomersButton_Click(sender, e);
+                }
                 // Show the specified grid
                 grid.Visibility = Visibility.Visible;
             }
@@ -245,7 +249,7 @@ namespace Library_application
             LendOutBookISBNTextBox.Text = string.Empty;
             LendOutBookCustomerIDTextBox.Text = string.Empty;
         }
-        // LendBookButton_Click event handler
+        // BorrowBookButton_Click event handler
         private void BorrowBookButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -320,6 +324,27 @@ namespace Library_application
                 var error = new Windows.UI.Popups.MessageDialog("An unexpected error occurred: " + ex.Message, "Error");
                 _ = error.ShowAsync();
             }
+        }
+
+        // ShowInformationOnCustomersButton_Click event handler
+        private void ShowInformationOnCustomersButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Toggle the visibility of the ShowInformationOnCustomersGrid
+            ToggleGridVisibility(ShowInformationOnCustomersGrid, sender, e);
+            // Update the lists
+            CustomerInformationListView.ItemsSource = null; // Reset the list view
+            CustomerInformationListView.ItemsSource = libraryLogic.Customers; // Set the list view source to the list of customers
+            CustomerInformationListView.SelectedIndex = -1; // Deselect any selected item
+            CustomersBorrowedBooksListView.ItemsSource = null; // Reset the borrowed books list view
+        }
+        // CustomerInformationListView_ItemClick event handler
+        private void CustomerInformationListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            // Display the selected customer's borrowed books in the CustomersBorrowedBooksListView
+            var selectedCustomer = (Customer)e.ClickedItem;
+            CustomersBorrowedBooksListView.ItemsSource = null; // Reset the list view
+            // Set the list view source to the selected customer's borrowed books
+            CustomersBorrowedBooksListView.ItemsSource = selectedCustomer.BorrowedBooks; 
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Library_application
 {
-    internal class  Book
+    internal class Book
     {
         private string _title;
         private string _author;
@@ -102,6 +102,11 @@ namespace Library_application
         internal string GetDetails()
         {
             return $"Title: {Title}, Author: {Author}, ISBN: {ISBN}, Available: {IsAvailable}";
+        }
+        // Method to determine how the book is represented as a string
+        public override string ToString()
+        {
+            return $"Title: {Title}, Author: {Author}, ISBN: {ISBN}";
         }
     }
 }

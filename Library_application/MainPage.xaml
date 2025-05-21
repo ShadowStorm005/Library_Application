@@ -85,7 +85,8 @@
                     HorizontalAlignment="Center"
                     Background="#FF3D3D3D" 
                     BorderBrush="#FF666666" 
-                    Foreground="#FFFAFAFA"/>
+                    Foreground="#FFFAFAFA" 
+                    Click="ShowInformationOnCustomersButton_Click"/>
             <Button x:Name="ExitButton" 
                     Content="Exit" 
                     Grid.Row="8" 
@@ -340,6 +341,61 @@
                     BorderBrush="#FF666666" 
                     Foreground="#FFFAFAFA" 
                     Click="ReturnBookButton_Click"/>
+        </Grid>
+        <Grid x:Name="ShowInformationOnCustomersGrid" Grid.Column="1" Visibility="Collapsed">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="7*"/>
+            </Grid.RowDefinitions>
+            <TextBlock HorizontalAlignment="Center" 
+                       TextWrapping="Wrap" 
+                       Text="See Information On The Customers And Their Borrowed Books" 
+                       VerticalAlignment="Center" 
+                       Grid.ColumnSpan="2"
+                       Foreground="#FFFAFAFA"/>
+            <TextBlock HorizontalAlignment="Center" 
+                       Grid.Row="1" 
+                       Grid.Column="0"
+                       TextWrapping="Wrap" 
+                       Text="List Of All Customers" 
+                       VerticalAlignment="Center"
+                       Foreground="#FFFAFAFA"/>
+            <TextBlock HorizontalAlignment="Center" 
+                       Grid.Row="1" 
+                       Grid.Column="1"
+                       TextWrapping="Wrap" 
+                       Text="List Of The Selected Customers Borrowed Books" 
+                       VerticalAlignment="Center"
+                       Foreground="#FFFAFAFA"/>
+            <ListView x:Name="CustomerInformationListView" 
+                      Grid.Row="2"
+                      Grid.Column="0" 
+                      ItemClick="CustomerInformationListView_ItemClick" 
+                      IsItemClickEnabled="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" 
+                                   Foreground="#FFFAFAFA" 
+                                   FontSize="16"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <ListView x:Name="CustomersBorrowedBooksListView" 
+                      Grid.Column="1" 
+                      Grid.Row="2">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" 
+                                   Foreground="#FFFAFAFA" 
+                                   FontSize="16"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
     </Grid>
 </Page>
