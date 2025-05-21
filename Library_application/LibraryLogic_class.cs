@@ -112,9 +112,13 @@ namespace Library_application
             {
                 customer.ReturnBook(bookToReturn); // Return the book from the specified customer
             }
-            else
+            else if (bookToReturn == null)
             {
-                throw new ArgumentException("Book or Customer not found.");
+                throw new ArgumentException("Book not found.");
+            }
+            else if (customer == null)
+            {
+                throw new ArgumentException("Customer not found.");
             }
         }
         // Method to add a new customer to the library

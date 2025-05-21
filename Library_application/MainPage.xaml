@@ -77,7 +77,8 @@
                     HorizontalAlignment="Center"
                     Background="#FF3D3D3D" 
                     BorderBrush="#FF666666" 
-                    Foreground="#FFFAFAFA"/>
+                    Foreground="#FFFAFAFA" 
+                    Click="ReturnBookFromCustomerButton_Click"/>
             <Button x:Name="ShowInformationOnCustomersButton" 
                     Content="Show Information On The Customers" 
                     Grid.Row="7" 
@@ -296,6 +297,49 @@
                     BorderBrush="#FF666666" 
                     Foreground="#FFFAFAFA" 
                     Click="BorrowBookButton_Click"/>
+        </Grid>
+        <Grid x:Name="ReturnBookGrid" Grid.Column="1" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <TextBlock HorizontalAlignment="Center" 
+                       TextWrapping="Wrap" 
+                       Text="Return a Book From a Customer" 
+                       VerticalAlignment="Center"
+                       Foreground="#FFFAFAFA"/>
+            <TextBox x:Name="ReturnBookISBNTextBox" 
+                     HorizontalAlignment="Center" 
+                     Grid.Row="2" 
+                     TextWrapping="Wrap" 
+                     VerticalAlignment="Center"
+                     Background="#FF3D3D3D" 
+                     BorderBrush="#FF666666" 
+                     Foreground="#FFFAFAFA" 
+                     PlaceholderText="Enter The ISBN Of The Book To Be Returned" 
+                     PlaceholderForeground="#FFFAFAFA"/>
+            <TextBox x:Name="ReturnBookCustomerIDTextBox" 
+                     HorizontalAlignment="Center" 
+                     Grid.Row="3" 
+                     TextWrapping="Wrap" 
+                     VerticalAlignment="Center"
+                     Background="#FF3D3D3D" 
+                     BorderBrush="#FF666666" 
+                     Foreground="#FFFAFAFA" 
+                     PlaceholderText="Enter The ID Of The Customer That Is Returning The Book" 
+                     PlaceholderForeground="#FFFAFAFA"/>
+            <Button x:Name="ReturnBookButton" 
+                    Content="Return Book" 
+                    Grid.Row="4" 
+                    HorizontalAlignment="Center"
+                    Background="#FF3D3D3D" 
+                    BorderBrush="#FF666666" 
+                    Foreground="#FFFAFAFA" 
+                    Click="ReturnBookButton_Click"/>
         </Grid>
     </Grid>
 </Page>

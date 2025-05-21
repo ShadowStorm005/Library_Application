@@ -59,6 +59,10 @@ namespace Library_application
                 {
                     LendBookToCustomerButton_Click(sender, e);
                 }
+                if (ReturnBookGrid.Visibility == Visibility.Visible)
+                {
+                    ReturnBookFromCustomerButton_Click(sender, e);
+                }
                 // Show the specified grid
                 grid.Visibility = Visibility.Visible;
             }
@@ -264,6 +268,49 @@ namespace Library_application
             catch (InvalidOperationException ex)
             {
                 // Display an error message if the book is not available for borrowing
+                var error = new Windows.UI.Popups.MessageDialog(ex.Message, "Error");
+                _ = error.ShowAsync();
+            }
+            catch (Exception ex)
+            {
+                // Display a generic error message for any other exceptions
+                var error = new Windows.UI.Popups.MessageDialog("An unexpected error occurred: " + ex.Message, "Error");
+                _ = error.ShowAsync();
+            }
+        }
+
+        // ReturnBookFromCustomerButton_Click event handler
+        private void ReturnBookFromCustomerButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Toggle the visibility of the ReturnBookFromCustomerGrid
+            ToggleGridVisibility(ReturnBookGrid, sender, e);
+            // Clear the input fields
+            ReturnBookISBNTextBox.Text = string.Empty;
+            ReturnBookCustomerIDTextBox.Text = string.Empty;
+        }
+        // ReturnBookButton_Click event handler
+        private void ReturnBookButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                libraryLogic.ReturnBook(
+                    ReturnBookISBNTextBox.Text,
+                    ReturnBookCustomerIDTextBox.Text);
+                // Display a success message
+                var successMessage = new Windows.UI.Popups.MessageDialog("Book was returned successfully!", "Success");
+                _ = successMessage.ShowAsync();
+                // Hide the ReturnBookFromCustomerGrid and clear the input fields
+                ReturnBookFromCustomerButton_Click(sender, e);
+            }
+            catch (ArgumentException ex)
+            {
+                // Display an error message if the input value is incorrect
+                var error = new Windows.UI.Popups.MessageDialog(ex.Message, "Error");
+                _ = error.ShowAsync();
+            }
+            catch (InvalidOperationException ex)
+            {
+                // Display an error message if the book is not borrowed by the customer
                 var error = new Windows.UI.Popups.MessageDialog(ex.Message, "Error");
                 _ = error.ShowAsync();
             }
