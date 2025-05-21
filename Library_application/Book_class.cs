@@ -56,7 +56,7 @@ namespace Library_application
             set
             {
                 // ISBN must be a 13-digit number without any separators
-                if (value.Length != 13 || !ulong.TryParse(value, out _))
+                if (value.Length != 13 || !ulong.TryParse(value, out _) || value.StartsWith("-") || value.StartsWith("+"))
                 {
                     throw new ArgumentOutOfRangeException("ISBN must be a 13-digit number without any separators.");
                 }
