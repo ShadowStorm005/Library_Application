@@ -55,6 +55,10 @@ namespace Library_application
                 {
                     RemoveCustomerButton_Click(sender, e);
                 }
+                if (LendBookToCustomerGrid.Visibility == Visibility.Visible)
+                {
+                    LendBookToCustomerButton_Click(sender, e);
+                }
                 // Show the specified grid
                 grid.Visibility = Visibility.Visible;
             }
@@ -217,6 +221,49 @@ namespace Library_application
             catch (ArgumentException ex)
             {
                 // Display an error message if the error raising value is invalid
+                var error = new Windows.UI.Popups.MessageDialog(ex.Message, "Error");
+                _ = error.ShowAsync();
+            }
+            catch (Exception ex)
+            {
+                // Display a generic error message for any other exceptions
+                var error = new Windows.UI.Popups.MessageDialog("An unexpected error occurred: " + ex.Message, "Error");
+                _ = error.ShowAsync();
+            }
+        }
+
+        // LendBookToCustomerButton_Click event handler
+        private void LendBookToCustomerButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Toggle the visibility of the LendBookToCustomerGrid
+            ToggleGridVisibility(LendBookToCustomerGrid, sender, e);
+            // Clear the input fields
+            LendOutBookISBNTextBox.Text = string.Empty;
+            LendOutBookCustomerIDTextBox.Text = string.Empty;
+        }
+        // LendBookButton_Click event handler
+        private void BorrowBookButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                libraryLogic.BorrowBook(
+                    LendOutBookISBNTextBox.Text,
+                    LendOutBookCustomerIDTextBox.Text);
+                // Display a success message
+                var successMessage = new Windows.UI.Popups.MessageDialog("Book was borrowed successfully!", "Success");
+                _ = successMessage.ShowAsync();
+                // Hide the LendBookToCustomerGrid and clear the input fields
+                LendBookToCustomerButton_Click(sender, e);
+            }
+            catch (ArgumentException ex)
+            {
+                // Display an error message if the input value is incorrect
+                var error = new Windows.UI.Popups.MessageDialog(ex.Message, "Error");
+                _ = error.ShowAsync();
+            }
+            catch (InvalidOperationException ex)
+            {
+                // Display an error message if the book is not available for borrowing
                 var error = new Windows.UI.Popups.MessageDialog(ex.Message, "Error");
                 _ = error.ShowAsync();
             }

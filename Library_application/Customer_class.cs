@@ -42,7 +42,7 @@ namespace Library_application
             get { return _id; }
             set
             {
-                if (value.Length != 6 || !int.TryParse(value, out _)) // _id must be a 6-digit number
+                if (value.Length != 6 || !uint.TryParse(value, out _)) // _id must be a 6-digit number
                 {
                     throw new ArgumentOutOfRangeException("ID must be a 6-digit number.");
                 }

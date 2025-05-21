@@ -69,7 +69,8 @@
                     HorizontalAlignment="Center"
                     Background="#FF3D3D3D" 
                     BorderBrush="#FF666666" 
-                    Foreground="#FFFAFAFA"/>
+                    Foreground="#FFFAFAFA" 
+                    Click="LendBookToCustomerButton_Click"/>
             <Button x:Name="ReturnBookFromCustomerButton" 
                     Content="Return a Book From a Customer" 
                     Grid.Row="6" 
@@ -252,6 +253,49 @@
                     BorderBrush="#FF666666" 
                     Foreground="#FFFAFAFA" 
                     Click="RemoveCustomerFromLibraryButton_Click"/>
+        </Grid>
+        <Grid x:Name="LendBookToCustomerGrid" Grid.Column="1" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <TextBlock HorizontalAlignment="Center" 
+                       TextWrapping="Wrap" 
+                       Text="Lend Out a Book To a Customer" 
+                       VerticalAlignment="Center"
+                       Foreground="#FFFAFAFA"/>
+            <TextBox x:Name="LendOutBookISBNTextBox" 
+                     HorizontalAlignment="Center" 
+                     Grid.Row="2" 
+                     TextWrapping="Wrap" 
+                     VerticalAlignment="Center"
+                     Background="#FF3D3D3D" 
+                     BorderBrush="#FF666666" 
+                     Foreground="#FFFAFAFA" 
+                     PlaceholderText="Enter The ISBN Of The Book To Be Lent Out" 
+                     PlaceholderForeground="#FFFAFAFA"/>
+            <TextBox x:Name="LendOutBookCustomerIDTextBox" 
+                     HorizontalAlignment="Center" 
+                     Grid.Row="3" 
+                     TextWrapping="Wrap" 
+                     VerticalAlignment="Center"
+                     Background="#FF3D3D3D" 
+                     BorderBrush="#FF666666" 
+                     Foreground="#FFFAFAFA" 
+                     PlaceholderText="Enter The ID Of The Customer That Will Borrow The Book" 
+                     PlaceholderForeground="#FFFAFAFA"/>
+            <Button x:Name="BorrowBookButton" 
+                    Content="Borrow Book" 
+                    Grid.Row="4" 
+                    HorizontalAlignment="Center"
+                    Background="#FF3D3D3D" 
+                    BorderBrush="#FF666666" 
+                    Foreground="#FFFAFAFA" 
+                    Click="BorrowBookButton_Click"/>
         </Grid>
     </Grid>
 </Page>

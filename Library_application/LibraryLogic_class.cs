@@ -92,11 +92,15 @@ namespace Library_application
             Customer customer = Customers.Find(c => c.ID == customerId);
             if (bookToBorrow != null && customer != null)
             {
-                customer.BorrowBook(bookToBorrow); // Borrow the book to the specified customer
+                customer.BorrowBook(bookToBorrow); // Lend out the book to the specified customer
             }
-            else
+            else if (bookToBorrow == null)
             {
-                throw new ArgumentException("Book or Customer not found.");
+                throw new ArgumentException("Book not found.");
+            }
+            else if (customer == null)
+            {
+                throw new ArgumentException("Customer not found.");
             }
         }
         // Method to return a book from a specified customer

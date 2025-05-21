@@ -56,7 +56,7 @@ namespace Library_application
             set
             {
                 // ISBN must be a 13-digit number without any separators
-                if (string.IsNullOrWhiteSpace(value) || value.Length != 13 || !int.TryParse(value, out _))
+                if (value.Length != 13 || !ulong.TryParse(value, out _))
                 {
                     throw new ArgumentOutOfRangeException("ISBN must be a 13-digit number without any separators.");
                 }
