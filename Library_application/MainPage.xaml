@@ -93,7 +93,8 @@
                     HorizontalAlignment="Center"
                     Background="#FF3D3D3D" 
                     BorderBrush="#FF666666" 
-                    Foreground="#FFFAFAFA"/>
+                    Foreground="#FFFAFAFA" 
+                    Click="ExitButton_Click"/>
         </Grid>
         <Grid x:Name="RegisterNewBookGrid" Grid.Column="1" Visibility="Collapsed">
             <Grid.RowDefinitions>

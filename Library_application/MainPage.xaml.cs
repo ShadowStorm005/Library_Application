@@ -346,5 +346,11 @@ namespace Library_application
             // Set the list view source to the selected customer's borrowed books
             CustomersBorrowedBooksListView.ItemsSource = selectedCustomer.BorrowedBooks; 
         }
+
+        // ExitButton_Click event handler
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            App.Current.Exit(); // Close the application
+        }
     }
 }
