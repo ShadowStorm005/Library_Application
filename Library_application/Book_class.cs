@@ -38,7 +38,7 @@ namespace Library_application
             {
                 foreach (char c in value)
                 {
-                    if (!char.IsLetter(c) && c != ' ') // _author cannot contain numbers or special characters
+                    if (!char.IsLetter(c) && c != ' ' && c != '.') // _author cannot contain numbers or special characters
                     {
                         throw new FormatException("Author cannot contain numbers or special characters.");
                     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Library_application
 {
@@ -66,6 +67,50 @@ namespace Library_application
         public List<Book> GetBooks()
         {
             return AllBooks;
+        }
+        // GetBooks overload method to filter books by title and/or author and/or avalibility
+        public List<Book> GetBooks(string title, string author, bool onlyAvalible)
+        {
+            // Return a list of books that match the title and/or author
+            if (title == string.Empty)
+            {
+                if (onlyAvalible)
+                {
+                    // If title is empty, and only avalible is checked, filter by author only
+                    return AllBooks.FindAll(b => b.Author.Contains(author, StringComparison.OrdinalIgnoreCase) && b.IsAvailable);
+                }
+                else
+                {
+                    // If title is empty, filter by author only
+                    return AllBooks.FindAll(b => b.Author.Contains(author, StringComparison.OrdinalIgnoreCase));
+                }
+            }
+            else if (author == string.Empty)
+            {
+                if (onlyAvalible)
+                {
+                    // If author is empty, and only avalible is checked, filter by title only
+                    return AllBooks.FindAll(b => b.Title.Contains(title, StringComparison.OrdinalIgnoreCase) && b.IsAvailable);
+                }
+                else
+                {
+                    // If author is empty, filter by title only
+                    return AllBooks.FindAll(b => b.Title.Contains(title, StringComparison.OrdinalIgnoreCase));
+                }
+            }
+            else if (onlyAvalible)
+            {
+                // If both title and author are provided, and only avalible is checked, filter by both
+                return AllBooks.FindAll(b => b.Title.Contains(title, StringComparison.OrdinalIgnoreCase) && 
+                                            b.Author.Contains(author, StringComparison.OrdinalIgnoreCase) && 
+                                            b.IsAvailable);
+            }
+            else
+            {
+                // If both title and author are provided, filter by both
+                return AllBooks.FindAll(b => b.Title.Contains(title, StringComparison.OrdinalIgnoreCase) && 
+                                            b.Author.Contains(author, StringComparison.OrdinalIgnoreCase));
+            }
         }
         // Method to add a new book to the library
         public void AddBook(string title, string author, string isbn)

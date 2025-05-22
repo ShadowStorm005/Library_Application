@@ -26,6 +26,25 @@ namespace Library_application
         public MainPage()
         {
             this.InitializeComponent();
+            // Preload some sample books and customers for testing purposes
+            libraryLogic.AllBooks.Add(new Book("The Great Gatsby", "F. Scott Fitzgerald", "9780743273565"));
+            libraryLogic.AllBooks.Add(new Book("To Kill a Mockingbird", "Harper Lee", "9780061120084"));
+            libraryLogic.AllBooks.Add(new Book("1984", "George Orwell", "9780451524935"));
+            libraryLogic.AllBooks.Add(new Book("Pineapple Express", "James Franco", "9781452170523"));
+            libraryLogic.AllBooks.Add(new Book("The Catcher in the Rye", "J.D. Salinger", "9780316769488"));
+            libraryLogic.AllBooks.Add(new Book("The Hobbit", "J.R.R. Tolkien", "9780547928227"));
+            libraryLogic.AllBooks.Add(new Book("The Lord of the Rings", "J.R.R. Tolkien", "9780544003415"));
+            libraryLogic.AllBooks.Add(new Book("The Alchemist", "Paulo Coelho", "9780062315007"));
+            libraryLogic.AllBooks.Add(new Book("The Da Vinci Code", "Dan Brown", "9780307474278"));
+            libraryLogic.AllBooks.Add(new Book("The Hunger Games", "Suzanne Collins", "9780439023528"));
+            libraryLogic.Customers.Add(new Customer("John Doe", "123456"));
+            libraryLogic.Customers.Add(new Customer("Jane Smith", "654321"));
+            libraryLogic.Customers.Add(new Customer("Alice Johnson", "111111"));
+            libraryLogic.Customers.Add(new Customer("Bob Brown", "222222"));
+            libraryLogic.Customers.Add(new Customer("Charlie Green", "333333"));
+            libraryLogic.BorrowBook("9780743273565", "123456"); // John Doe borrows The Great Gatsby
+            libraryLogic.BorrowBook("9780061120084", "654321"); // Jane Smith borrows To Kill a Mockingbird
+            libraryLogic.BorrowBook("9780451524935", "111111"); // Alice Johnson borrows 1984
         }
 
         // Method to toggle the visibility of a given grid and make sure the other grids are hidden
@@ -66,6 +85,10 @@ namespace Library_application
                 if (ShowInformationOnCustomersGrid.Visibility == Visibility.Visible)
                 {
                     ShowInformationOnCustomersButton_Click(sender, e);
+                }
+                if (SeeAllBooksGrid.Visibility == Visibility.Visible)
+                {
+                    SeeAllBooksButton_Click(sender, e);
                 }
                 // Show the specified grid
                 grid.Visibility = Visibility.Visible;
@@ -344,7 +367,37 @@ namespace Library_application
             var selectedCustomer = (Customer)e.ClickedItem;
             CustomersBorrowedBooksListView.ItemsSource = null; // Reset the list view
             // Set the list view source to the selected customer's borrowed books
-            CustomersBorrowedBooksListView.ItemsSource = selectedCustomer.BorrowedBooks; 
+            CustomersBorrowedBooksListView.ItemsSource = selectedCustomer.BorrowedBooks;
+        }
+
+        // SeeAllBooksButton_Click event handler
+        private void SeeAllBooksButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Toggle the visibility of the SeeAllBooksGrid
+            ToggleGridVisibility(SeeAllBooksGrid, sender, e);
+            // Update the list of all books and clear the search text boxes
+            SearchedBooksListView.ItemsSource = null; // Reset the list view
+            SearchedBooksListView.ItemsSource = libraryLogic.GetBooks(); // Set the list view source to the list of all books
+            SearchedBooksListView.SelectedIndex = -1; // Deselect any selected item
+            SearchBookTitleTextBox.Text = string.Empty; // Clear the title search text box
+            SearchBookAuthorTextBox.Text = string.Empty; // Clear the author search text box
+            SearchAvalibleCheckBox.IsChecked = false; // Uncheck the available books checkbox
+        }
+        // SearchedBooksListView_FilterUpdate event handler
+        private void SearchedBooksListView_FilterUpdate(object sender, TextChangedEventArgs e)
+        {
+            // Update the list to filter the books by title and author
+            SearchedBooksListView.ItemsSource = libraryLogic.GetBooks(SearchBookTitleTextBox.Text, 
+                                                                    SearchBookAuthorTextBox.Text, 
+                                                                    (bool)SearchAvalibleCheckBox.IsChecked);
+        }
+        // SearchAvalibleCheckBox_Toggle event handler
+        private void SearchAvalibleCheckBox_Toggle(object sender, RoutedEventArgs e)
+        {
+            // Update the list to filter the books by availability
+            SearchedBooksListView.ItemsSource = libraryLogic.GetBooks(SearchBookTitleTextBox.Text, 
+                                                                    SearchBookAuthorTextBox.Text, 
+                                                                    (bool)SearchAvalibleCheckBox.IsChecked);
         }
 
         // ExitButton_Click event handler
@@ -352,5 +405,6 @@ namespace Library_application
         {
             App.Current.Exit(); // Close the application
         }
+
     }
 }
