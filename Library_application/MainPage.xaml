@@ -433,7 +433,9 @@
                       Grid.Row="2"
                       Grid.Column="0" 
                       ItemClick="CustomerInformationListView_ItemClick" 
-                      IsItemClickEnabled="True">
+                      IsItemClickEnabled="True" 
+                      Header="Name | ID | Borrowed Books | Reserved Book ISBN"
+                      Foreground="#FFFAFAFA">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding}" 

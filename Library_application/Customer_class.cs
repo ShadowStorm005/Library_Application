@@ -153,7 +153,7 @@ namespace Library_application
         // Method to determine how the customer is represented as a string
         public override string ToString()
         {
-            return $"{Name}, ID: {ID}, Number Of Borrowed Books: {BorrowedBooks.Count}";
+            return $"{Name} | {ID} | {BorrowedBooks.Count} | {ReservedBookISBN}";
         }
     }
 }
