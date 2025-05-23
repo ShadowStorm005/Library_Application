@@ -477,49 +477,49 @@ namespace Library_application
             SearchAvalibleCheckBox.IsEnabled = true; // Enable the checkbox
             GenerateReportCheckBox.IsChecked = false; // Uncheck the generate report checkbox
         }
+        private void ListView_UpdateFilter(object sender)
+        {
+            // Update the list to filter the books by title and author
+            SearchedBooksListView.ItemsSource = libraryLogic.GetBooks(SearchBookTitleTextBox.Text,
+                                                                    SearchBookAuthorTextBox.Text,
+                                                                    (bool)SearchAvalibleCheckBox.IsChecked);
+            // Update the list to filter the books by title and author for the report
+            ReportListView.ItemsSource = libraryLogic.GetReport(SearchBookTitleTextBox.Text,
+                                                                SearchBookAuthorTextBox.Text,
+                                                                (bool)SearchAvalibleCheckBox.IsChecked,
+                                                                (bool)GenerateReportCheckBox.IsChecked);
+        }
         // SearchedBooksListView_FilterUpdate event handler
         private void SearchedBooksListView_FilterUpdate(object sender, TextChangedEventArgs e)
         {
-            // Update the list to filter the books by title and author
-            SearchedBooksListView.ItemsSource = libraryLogic.GetBooks(SearchBookTitleTextBox.Text, 
-                                                                    SearchBookAuthorTextBox.Text, 
-                                                                    (bool)SearchAvalibleCheckBox.IsChecked);
-            // Update the list to filter the books by title and author for the report
-            ReportListView.ItemsSource = libraryLogic.GetReport(SearchBookTitleTextBox.Text, 
-                                                                SearchBookAuthorTextBox.Text, 
-                                                                (bool)SearchAvalibleCheckBox.IsChecked,
-                                                                (bool)GenerateReportCheckBox.IsChecked);
+            ListView_UpdateFilter(sender); // Update the lists filters
         }
         // SearchAvalibleCheckBox_Toggle event handler
         private void SearchAvalibleCheckBox_Toggle(object sender, RoutedEventArgs e)
         {
-            // Update the list to filter the books by availability
-            SearchedBooksListView.ItemsSource = libraryLogic.GetBooks(SearchBookTitleTextBox.Text, 
-                                                                    SearchBookAuthorTextBox.Text, 
-                                                                    (bool)SearchAvalibleCheckBox.IsChecked);
+            GenerateReportCheckBox.IsChecked = false; // Uncheck the generate report checkbox
+            ListView_UpdateFilter(sender); // Update the lists filters
+            // Switch the visibility of the list views if the report list view is visible
+            if (ReportListView.Visibility == Visibility.Visible)
+            {
+                SearchedBooksListView.Visibility = Visibility.Visible; // Hide the searched books list view
+                ReportListView.Visibility = Visibility.Collapsed; // Show the report list view
+            }
         }
-        // GenerateReportButton_Click event handler
+        // GenerateReportCheckBox_Toggle event handler
         private void GenerateReportCheckBox_Toggle(object sender, RoutedEventArgs e)
         {
             // Hide the SearchedBooksListView to show the ReportListView with all borrowed books in the library
             SearchAvalibleCheckBox.IsChecked = false; // Uncheck the available books checkbox
-            ReportListView.ItemsSource = libraryLogic.GetReport(SearchBookTitleTextBox.Text,
-                                                            SearchBookAuthorTextBox.Text,
-                                                            (bool)SearchAvalibleCheckBox.IsChecked,
-                                                            (bool)GenerateReportCheckBox.IsChecked);
-            SearchedBooksListView.ItemsSource = libraryLogic.GetBooks(SearchBookTitleTextBox.Text,
-                                                                    SearchBookAuthorTextBox.Text,
-                                                                    (bool)SearchAvalibleCheckBox.IsChecked);
-            // Switch The SearchAvalibleCheckBox on/off and toggle the visibility of the list views
-            if (SearchAvalibleCheckBox.IsEnabled)
+            ListView_UpdateFilter(sender); // Update the lists filters
+            // Switch the visibility of the list views
+            if (SearchedBooksListView.Visibility == Visibility.Visible)
             {
-                SearchAvalibleCheckBox.IsEnabled = false; // Disable the checkbox
                 SearchedBooksListView.Visibility = Visibility.Collapsed; // Hide the searched books list view
                 ReportListView.Visibility = Visibility.Visible; // Show the report list view
             }
             else
             {
-                SearchAvalibleCheckBox.IsEnabled = true; // Enable the checkbox
                 SearchedBooksListView.Visibility = Visibility.Visible; // Show the searched books list view
                 ReportListView.Visibility = Visibility.Collapsed; // Hide the report list view
             }

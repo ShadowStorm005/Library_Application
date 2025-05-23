@@ -456,7 +456,7 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
-        <Grid x:Name="SeeAllBooksGrid" Grid.Column="1">
+        <Grid x:Name="SeeAllBooksGrid" Grid.Column="1" Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -510,7 +510,7 @@
                 <TextBlock Text="Generate a Report On All Borrowed Books" 
                            Foreground="#FFFAFAFA"/>
             </CheckBox>
-            <ListView x:Name="SearchedBooksListView" Grid.Row="2" Visibility="Collapsed">
+            <ListView x:Name="SearchedBooksListView" Grid.Row="2">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding}" 
@@ -519,7 +519,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <ListView x:Name="ReportListView" Grid.Row="2">
+            <ListView x:Name="ReportListView" Grid.Row="2" Visibility="Collapsed">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding}" 
