@@ -75,6 +75,10 @@ namespace Library_application
             get { return _isAvailable; }
             set { _isAvailable = value; }
         }
+        public string Details // Property to get book details when displaying the book in a list
+        {
+            get { return GetDetails(); }
+        }
 
         // Method to loan the book
         internal bool Borrow()
@@ -101,7 +105,7 @@ namespace Library_application
         // Method to get book details
         internal string GetDetails()
         {
-            return $"Title: {Title}, Author: {Author}, ISBN: {ISBN}, Available: {IsAvailable}";
+            return $"{Title} | {Author} | {ISBN} | {IsAvailable}";
         }
         // Method to determine how the book is represented as a string
         public override string ToString()

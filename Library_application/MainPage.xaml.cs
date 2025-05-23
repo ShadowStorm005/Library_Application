@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -269,16 +270,38 @@ namespace Library_application
             // Toggle the visibility of the LendBookToCustomerGrid
             ToggleGridVisibility(LendBookToCustomerGrid, sender, e);
             // Clear the input fields
-            LendOutBookISBNTextBox.Text = string.Empty;
-            LendOutBookCustomerIDTextBox.Text = string.Empty;
+            LendOutSearchedBooksListView.ItemsSource = null; // Reset the list view
+            LendOutSearchedBooksListView.ItemsSource = libraryLogic.GetBooks(); // Set the list view source to the list of all books
+            LendOutSearchedBooksListView.SelectedIndex = -1; // Deselect any selected item
+            LendOutSearchBookTitleTextBox.Text = string.Empty; // Clear the title search text box
+            LendOutSearchBookAuthorTextBox.Text = string.Empty; // Clear the author search text box
+            LendOutSearchAvalibleCheckBox.IsChecked = false; // Uncheck the available books checkbox
+            LendOutBookCustomerIDTextBox.Text = string.Empty; // Clear the customer ID text box
         }
         // BorrowBookButton_Click event handler
         private void BorrowBookButton_Click(object sender, RoutedEventArgs e)
         {
+            // Check if a book is selected in the list view
+            if (LendOutSearchedBooksListView.SelectedItem == null)
+            {
+                // Display an error message if no book is selected
+                var error = new Windows.UI.Popups.MessageDialog("Please select a book to borrow.", "Error");
+                _ = error.ShowAsync();
+                return;
+            }
+            // Check if the customer ID is provided
+            if (string.IsNullOrWhiteSpace(LendOutBookCustomerIDTextBox.Text))
+            {
+                // Display an error message if the customer ID is empty
+                var error = new Windows.UI.Popups.MessageDialog("Please enter a customer ID.", "Error");
+                _ = error.ShowAsync();
+                return;
+            }
             try
             {
+                Book selectedBook = (Book)LendOutSearchedBooksListView.SelectedItem;
                 libraryLogic.BorrowBook(
-                    LendOutBookISBNTextBox.Text,
+                    selectedBook.ISBN,
                     LendOutBookCustomerIDTextBox.Text);
                 // Display a success message
                 var successMessage = new Windows.UI.Popups.MessageDialog("Book was borrowed successfully!", "Success");
@@ -304,6 +327,22 @@ namespace Library_application
                 var error = new Windows.UI.Popups.MessageDialog("An unexpected error occurred: " + ex.Message, "Error");
                 _ = error.ShowAsync();
             }
+        }
+        // LendOutSearchBookTitleTextBox_TextChanged event handler
+        private void LendOutSearchedBooksListView_FilterUpdate(object sender, TextChangedEventArgs e)
+        {
+            // Update the list to filter the books by title and author
+            LendOutSearchedBooksListView.ItemsSource = libraryLogic.GetBooks(LendOutSearchBookTitleTextBox.Text, 
+                                                                           LendOutSearchBookAuthorTextBox.Text, 
+                                                                           (bool)LendOutSearchAvalibleCheckBox.IsChecked);
+        }
+        // LendOutSearchAvalibleCheckBox_Toggle event handler
+        private void LendOutSearchAvalibleCheckBox_Toggle(object sender, RoutedEventArgs e)
+        {
+            // Update the list to filter the books by availability
+            LendOutSearchedBooksListView.ItemsSource = libraryLogic.GetBooks(LendOutSearchBookTitleTextBox.Text, 
+                                                                           LendOutSearchBookAuthorTextBox.Text, 
+                                                                           (bool)LendOutSearchAvalibleCheckBox.IsChecked);
         }
 
         // ReturnBookFromCustomerButton_Click event handler
@@ -405,6 +444,5 @@ namespace Library_application
         {
             App.Current.Exit(); // Close the application
         }
-
     }
 }

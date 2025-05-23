@@ -266,48 +266,86 @@
                     Foreground="#FFFAFAFA" 
                     Click="RemoveCustomerFromLibraryButton_Click"/>
         </Grid>
-        <Grid x:Name="LendBookToCustomerGrid" Grid.Column="1" Visibility="Collapsed">
+        <Grid x:Name="LendBookToCustomerGrid" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition/>
-                <RowDefinition Height="2*"/>
                 <RowDefinition/>
                 <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition Height="3*"/>
+                <RowDefinition Height="7*"/>
             </Grid.RowDefinitions>
             <TextBlock HorizontalAlignment="Center" 
                        TextWrapping="Wrap" 
-                       Text="Lend Out a Book To a Customer" 
+                       Text="Enter a Customer ID And Select a Book You Wish To Borrow or Reserve" 
                        VerticalAlignment="Center"
                        Foreground="#FFFAFAFA"/>
-            <TextBox x:Name="LendOutBookISBNTextBox" 
-                     HorizontalAlignment="Center" 
-                     Grid.Row="2" 
-                     TextWrapping="Wrap" 
-                     VerticalAlignment="Center"
-                     Background="#FF3D3D3D" 
-                     BorderBrush="#FF666666" 
-                     Foreground="#FFFAFAFA" 
-                     PlaceholderText="Enter The ISBN Of The Book To Be Lent Out" 
-                     PlaceholderForeground="#FFFAFAFA"/>
+            <TextBlock HorizontalAlignment="Left" 
+                       Margin="147,0,0,0" 
+                       Grid.Row="2" 
+                       TextWrapping="Wrap" 
+                       Text="Title | Author | ISBN | Avalible" 
+                       VerticalAlignment="Center"
+                       Foreground="#FFFAFAFA"/>
             <TextBox x:Name="LendOutBookCustomerIDTextBox" 
-                     HorizontalAlignment="Center" 
-                     Grid.Row="3" 
-                     TextWrapping="Wrap" 
+                     HorizontalAlignment="Left" 
+                     Grid.Row="1" 
                      VerticalAlignment="Center"
                      Background="#FF3D3D3D" 
                      BorderBrush="#FF666666" 
                      Foreground="#FFFAFAFA" 
                      PlaceholderText="Enter The ID Of The Customer That Will Borrow The Book" 
-                     PlaceholderForeground="#FFFAFAFA"/>
+                     PlaceholderForeground="#FFFAFAFA" 
+                     Margin="50,0,0,0"/>
+            <TextBox x:Name="LendOutSearchBookTitleTextBox" 
+                     HorizontalAlignment="Right" 
+                     Margin="0,0,50,0" 
+                     Grid.Row="1" 
+                     VerticalAlignment="Center"
+                     Background="#FF3D3D3D" 
+                     BorderBrush="#FF666666" 
+                     Foreground="#FFFAFAFA" 
+                     PlaceholderText="Search For a Title" 
+                     PlaceholderForeground="#FFFAFAFA" 
+                     Height="32" 
+                     Width="130" 
+                     TextChanged="LendOutSearchedBooksListView_FilterUpdate"/>
+            <TextBox x:Name="LendOutSearchBookAuthorTextBox" 
+                     HorizontalAlignment="Right" 
+                     Margin="0,0,230,0" 
+                     Grid.Row="1" 
+                     VerticalAlignment="Center"
+                     Background="#FF3D3D3D" 
+                     BorderBrush="#FF666666" 
+                     Foreground="#FFFAFAFA" 
+                     PlaceholderText="Search For An Auhor" 
+                     PlaceholderForeground="#FFFAFAFA" 
+                     Height="32" 
+                     Width="150" 
+                     TextChanged="LendOutSearchedBooksListView_FilterUpdate"/>
+            <CheckBox x:Name="LendOutSearchAvalibleCheckBox" 
+                      HorizontalAlignment="Right" 
+                      Margin="0,0,450,0" 
+                      Grid.Row="1"
+                      VerticalAlignment="Center" 
+                      Click="LendOutSearchAvalibleCheckBox_Toggle">
+                <TextBlock Text="Show Only Avalible Books" Foreground="#FFFAFAFA"/>
+            </CheckBox>
             <Button x:Name="BorrowBookButton" 
-                    Content="Borrow Book" 
-                    Grid.Row="4" 
-                    HorizontalAlignment="Center"
+                    Content="Lend Out The Book To The Customer" 
+                    Grid.Row="2" 
+                    HorizontalAlignment="Center" 
                     Background="#FF3D3D3D" 
                     BorderBrush="#FF666666" 
-                    Foreground="#FFFAFAFA" 
+                    Foreground="#FFFAFAFA"
                     Click="BorrowBookButton_Click"/>
+            <ListView x:Name="LendOutSearchedBooksListView" Grid.Row="3">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Details}" 
+                                   Foreground="#FFFAFAFA" 
+                                   FontSize="16"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
         <Grid x:Name="ReturnBookGrid" Grid.Column="1" Visibility="Collapsed">
             <Grid.RowDefinitions>
