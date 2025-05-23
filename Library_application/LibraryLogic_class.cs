@@ -58,12 +58,6 @@ namespace Library_application
         }
 
         // Method to get a list of all available books
-        /* Side note: The method GetBooks is not necessary in the current implementation
-           as the AllBooks property already provides access to the list of all books.
-           However, It is included for for clarity and because it will be simple to further improve
-           the method in the future by adding overloading methods to filter the list of all books,
-           for example, by title or author. This will be useful if there exists many books.
-        */
         public List<Book> GetBooks()
         {
             return AllBooks;
@@ -137,7 +131,19 @@ namespace Library_application
             Customer customer = Customers.Find(c => c.ID == customerId);
             if (bookToBorrow != null && customer != null)
             {
-                customer.BorrowBook(bookToBorrow); // Lend out the book to the specified customer
+                if (bookToBorrow.IsReserved && customer.ReservedBookISBN != bookToBorrow.ISBN)
+                {
+                    throw new ArgumentException("Book is reserved for another customer.");
+                }
+                else if (bookToBorrow.IsReserved && customer.ReservedBookISBN == bookToBorrow.ISBN)
+                {
+                    customer.BorrowBook(bookToBorrow); // Lend out the book to the specified customer
+                    bookToBorrow.IsReserved = false; // Unreserve the book
+                }
+                else
+                {
+                    customer.BorrowBook(bookToBorrow); // Lend out the book to the specified customer
+                }
             }
             else if (bookToBorrow == null)
             {
@@ -164,6 +170,39 @@ namespace Library_application
             else if (customer == null)
             {
                 throw new ArgumentException("Customer not found.");
+            }
+        }
+        // Method to reserve a book for a specified customer
+        public void ReserveBook(string isbn, string customerId)
+        {
+            Book bookToReserve = AllBooks.Find(b => b.ISBN == isbn);
+            Customer customer = Customers.Find(c => c.ID == customerId);
+            if (bookToReserve != null && !bookToReserve.IsReserved && !bookToReserve.IsAvailable && customer != null)
+            {
+                if (!bookToReserve.IsReserved && customer.BorrowedBooks.Contains(bookToReserve))
+                {
+                    throw new ArgumentException("Book is already borrowed for this customer.");
+                }
+                else
+                {
+                    customer.ReserveBook(bookToReserve); // Reserve the book for the specified customer
+                }
+            }
+            else if (bookToReserve == null)
+            {
+                throw new ArgumentException("Book not found.");
+            }
+            else if (customer == null)
+            {
+                throw new ArgumentException("Customer not found.");
+            }
+            else if (bookToReserve.IsReserved)
+            {
+                throw new ArgumentException("Book is already reserved.");
+            }
+            else if (bookToReserve.IsAvailable)
+            {
+                throw new ArgumentException("Book is available and cannot be reserved. You can borrow it.");
             }
         }
         // Method to add a new customer to the library

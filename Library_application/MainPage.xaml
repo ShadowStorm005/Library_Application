@@ -266,7 +266,7 @@
                     Foreground="#FFFAFAFA" 
                     Click="RemoveCustomerFromLibraryButton_Click"/>
         </Grid>
-        <Grid x:Name="LendBookToCustomerGrid" Grid.Column="1">
+        <Grid x:Name="LendBookToCustomerGrid" Grid.Column="1" Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -279,10 +279,10 @@
                        VerticalAlignment="Center"
                        Foreground="#FFFAFAFA"/>
             <TextBlock HorizontalAlignment="Left" 
-                       Margin="147,0,0,0" 
+                       Margin="113,0,0,0" 
                        Grid.Row="2" 
                        TextWrapping="Wrap" 
-                       Text="Title | Author | ISBN | Avalible" 
+                       Text="Title | Author | ISBN | Avalible | Reserved" 
                        VerticalAlignment="Center"
                        Foreground="#FFFAFAFA"/>
             <TextBox x:Name="LendOutBookCustomerIDTextBox" 
@@ -337,6 +337,15 @@
                     BorderBrush="#FF666666" 
                     Foreground="#FFFAFAFA"
                     Click="BorrowBookButton_Click"/>
+            <Button x:Name="ReserveBookButton" 
+                    Content="Reserve The Book" 
+                    Grid.Row="2" 
+                    HorizontalAlignment="Right"
+                    Background="#FF3D3D3D" 
+                    BorderBrush="#FF666666" 
+                    Foreground="#FFFAFAFA" 
+                    Margin="0,0,150,0" 
+                    Click="ReserveBookButton_Click"/>
             <ListView x:Name="LendOutSearchedBooksListView" Grid.Row="3">
                 <ListView.ItemTemplate>
                     <DataTemplate>

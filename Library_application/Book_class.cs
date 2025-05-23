@@ -8,6 +8,7 @@ namespace Library_application
         private string _author;
         private string _isbn; // ISBN 13 number without any number separators
         private bool _isAvailable;
+        private bool _isReserved; // Reserved books are not available for borrowing
 
         // Constructor
         internal Book(string title, string author, string isbn)
@@ -75,6 +76,11 @@ namespace Library_application
             get { return _isAvailable; }
             set { _isAvailable = value; }
         }
+        internal bool IsReserved // Property to check if the book is reserved
+        {
+            get { return _isReserved; }
+            set { _isReserved = value; }
+        }
         public string Details // Property to get book details when displaying the book in a list
         {
             get { return GetDetails(); }
@@ -102,10 +108,23 @@ namespace Library_application
             }
             IsAvailable = true;
         }
+        // Method to reserve the book
+        internal bool Reserve()
+        {
+            if (IsReserved)
+            {
+                return false; // Book is already reserved
+            }
+            else
+            {
+                IsReserved = true;
+                return true; // Book is successfully reserved
+            }
+        }
         // Method to get book details
         internal string GetDetails()
         {
-            return $"{Title} | {Author} | {ISBN} | {IsAvailable}";
+            return $"{Title} | {Author} | {ISBN} | {IsAvailable} | {IsReserved}";
         }
         // Method to determine how the book is represented as a string
         public override string ToString()

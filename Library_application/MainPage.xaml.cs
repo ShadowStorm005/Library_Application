@@ -38,11 +38,13 @@ namespace Library_application
             libraryLogic.AllBooks.Add(new Book("The Alchemist", "Paulo Coelho", "9780062315007"));
             libraryLogic.AllBooks.Add(new Book("The Da Vinci Code", "Dan Brown", "9780307474278"));
             libraryLogic.AllBooks.Add(new Book("The Hunger Games", "Suzanne Collins", "9780439023528"));
+            libraryLogic.AllBooks.Add(new Book("A Dying Star", "Linus Warnemo", "0000000000000"));
             libraryLogic.Customers.Add(new Customer("John Doe", "123456"));
             libraryLogic.Customers.Add(new Customer("Jane Smith", "654321"));
             libraryLogic.Customers.Add(new Customer("Alice Johnson", "111111"));
             libraryLogic.Customers.Add(new Customer("Bob Brown", "222222"));
             libraryLogic.Customers.Add(new Customer("Charlie Green", "333333"));
+            libraryLogic.Customers.Add(new Customer("Anton Ljungkvist", "000000"));
             libraryLogic.BorrowBook("9780743273565", "123456"); // John Doe borrows The Great Gatsby
             libraryLogic.BorrowBook("9780061120084", "654321"); // Jane Smith borrows To Kill a Mockingbird
             libraryLogic.BorrowBook("9780451524935", "111111"); // Alice Johnson borrows 1984
@@ -344,6 +346,56 @@ namespace Library_application
                                                                            LendOutSearchBookAuthorTextBox.Text, 
                                                                            (bool)LendOutSearchAvalibleCheckBox.IsChecked);
         }
+        // ReserveBookButton_Click event handler
+        private void ReserveBookButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Check if a book is selected in the list view
+            if (LendOutSearchedBooksListView.SelectedItem == null)
+            {
+                // Display an error message if no book is selected
+                var error = new Windows.UI.Popups.MessageDialog("Please select a book to reserve.", "Error");
+                _ = error.ShowAsync();
+                return;
+            }
+            // Check if the customer ID is provided
+            if (string.IsNullOrWhiteSpace(LendOutBookCustomerIDTextBox.Text))
+            {
+                // Display an error message if the customer ID is empty
+                var error = new Windows.UI.Popups.MessageDialog("Please enter a customer ID.", "Error");
+                _ = error.ShowAsync();
+                return;
+            }
+            try
+            {
+                Book selectedBook = (Book)LendOutSearchedBooksListView.SelectedItem;
+                libraryLogic.ReserveBook(
+                    selectedBook.ISBN,
+                    LendOutBookCustomerIDTextBox.Text);
+                // Display a success message
+                var successMessage = new Windows.UI.Popups.MessageDialog("Book was reserved successfully!", "Success");
+                _ = successMessage.ShowAsync();
+                // Hide the LendBookToCustomerGrid and clear the input fields
+                LendBookToCustomerButton_Click(sender, e);
+            }
+            catch (ArgumentException ex)
+            {
+                // Display an error message if the input value is incorrect
+                var error = new Windows.UI.Popups.MessageDialog(ex.Message, "Error");
+                _ = error.ShowAsync();
+            }
+            catch (InvalidOperationException ex)
+            {
+                // Display an error message if the book is not available for borrowing
+                var error = new Windows.UI.Popups.MessageDialog(ex.Message, "Error");
+                _ = error.ShowAsync();
+            }
+            catch (Exception ex)
+            {
+                // Display a generic error message for any other exceptions
+                var error = new Windows.UI.Popups.MessageDialog("An unexpected error occurred: " + ex.Message, "Error");
+                _ = error.ShowAsync();
+            }
+        }
 
         // ReturnBookFromCustomerButton_Click event handler
         private void ReturnBookFromCustomerButton_Click(object sender, RoutedEventArgs e)
@@ -444,5 +496,6 @@ namespace Library_application
         {
             App.Current.Exit(); // Close the application
         }
+
     }
 }

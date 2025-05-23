@@ -8,6 +8,7 @@ namespace Library_application
         private string _name;
         private string _id; // 6-digit number
         private List<Book> _borrowedBooks;
+        private string _reservedBookISBN;
 
         // Constructor
         internal Customer(string name, string id)
@@ -69,6 +70,21 @@ namespace Library_application
                 _borrowedBooks = value;
             }
         }
+        internal string ReservedBookISBN
+        {
+            get { return _reservedBookISBN; }
+            set
+            {
+                if (!ulong.TryParse(value, out _) || 
+                    value.Length != 13 || 
+                    value.StartsWith("-") || 
+                    value.StartsWith("+"))
+                {
+                    throw new ArgumentException("ISBN must be a 13-digit number without any separators.");
+                }
+                _reservedBookISBN = value;
+            }
+        }
 
         // Method to borrow a book
         internal void BorrowBook(Book book)
@@ -96,6 +112,19 @@ namespace Library_application
             }
             book.Return(); // Return the book
             BorrowedBooks.Remove(book); // Remove the book from the borrowed list
+        }
+        // Method to reserve a book
+        internal void ReserveBook(Book book)
+        {
+            if (book == null) // Book cannot be null
+            {
+                throw new ArgumentNullException("Book cannot be null.");
+            }
+            if (!book.Reserve()) // Book must not be reserved to reserve it
+            {
+                throw new InvalidOperationException("Book is already reserved.");
+            }
+            ReservedBookISBN = book.ISBN; // Set the reserved book's ISBN
         }
         // Method to get the list of borrowed books
         /* Side note: The method GetBorrowedBooks is not necessary in the current implementation
