@@ -75,9 +75,9 @@ namespace Library_application
             get { return _reservedBookISBN; }
             set
             {
-                if (!ulong.TryParse(value, out _) || 
-                    value.Length != 13 || 
-                    value.StartsWith("-") || 
+                if (!ulong.TryParse(value, out _) ||
+                    value.Length != 13 ||
+                    value.StartsWith("-") ||
                     value.StartsWith("+"))
                 {
                     throw new ArgumentException("ISBN must be a 13-digit number without any separators.");
@@ -154,6 +154,10 @@ namespace Library_application
         public override string ToString()
         {
             return $"{Name} | {ID} | {BorrowedBooks.Count} | {ReservedBookISBN}";
+        }
+        public string Report()
+        {
+            return $"{Name} | ID: {ID}";
         }
     }
 }

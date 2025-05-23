@@ -106,6 +106,67 @@ namespace Library_application
                                             b.Author.Contains(author, StringComparison.OrdinalIgnoreCase));
             }
         }
+        // GetBooks overload method to filter books by title and/or author and/or avalibility
+        public List<Book> GetBooks(string title, string author, bool onlyAvalible, bool report)
+        {
+            // Return a list of books that match the title and/or author
+            if (title == string.Empty)
+            {
+                if (onlyAvalible)
+                {
+                    // If title is empty, and only avalible is checked, filter by author only
+                    return AllBooks.FindAll(b => b.Author.Contains(author, StringComparison.OrdinalIgnoreCase) && b.IsAvailable);
+                }
+                else if (report)
+                {
+                    // If title is empty, and report is checked, filter by author and borrowed only
+                    return AllBooks.FindAll(b => b.Author.Contains(author, StringComparison.OrdinalIgnoreCase) && !b.IsAvailable);
+                }
+                else
+                {
+                    // If title is empty, filter by author only
+                    return AllBooks.FindAll(b => b.Author.Contains(author, StringComparison.OrdinalIgnoreCase));
+                }
+            }
+            else if (author == string.Empty)
+            {
+                if (onlyAvalible)
+                {
+                    // If author is empty, and only avalible is checked, filter by title only
+                    return AllBooks.FindAll(b => b.Title.Contains(title, StringComparison.OrdinalIgnoreCase) && b.IsAvailable);
+                }
+                else if (report)
+                {
+                    // If author is empty, and report is checked, filter by title and borrowed only
+                    return AllBooks.FindAll(b => b.Title.Contains(title, StringComparison.OrdinalIgnoreCase) && !b.IsAvailable);
+                }
+                else
+                {
+                    // If author is empty, filter by title only
+                    return AllBooks.FindAll(b => b.Title.Contains(title, StringComparison.OrdinalIgnoreCase));
+                }
+            }
+            else if (onlyAvalible)
+            {
+                // If both title and author are provided, and only avalible is checked, filter by both
+                return AllBooks.FindAll(b => b.Title.Contains(title, StringComparison.OrdinalIgnoreCase) &&
+                                            b.Author.Contains(author, StringComparison.OrdinalIgnoreCase) &&
+                                            b.IsAvailable);
+            }
+            else if (report)
+            {
+                // If both title and author are provided, and report is checked, filter by both and borrowed only
+                return AllBooks.FindAll(b => b.Title.Contains(title, StringComparison.OrdinalIgnoreCase) &&
+                                            b.Author.Contains(author, StringComparison.OrdinalIgnoreCase) &&
+                                            !b.IsAvailable);
+            }
+            else
+            {
+                // If both title and author are provided, filter by both
+                return AllBooks.FindAll(b => b.Title.Contains(title, StringComparison.OrdinalIgnoreCase) &&
+                                            b.Author.Contains(author, StringComparison.OrdinalIgnoreCase));
+            }
+        }
         // Method to add a new book to the library
         public void AddBook(string title, string author, string isbn)
         {
@@ -265,6 +326,27 @@ namespace Library_application
             {
                 throw new ArgumentException("Customer not found.");
             }
+        }
+        // Method to get a list of formated strings for all borrowed books and their customers
+        public List<string> GetReport(string title, string author, bool onlyAvalible, bool report)
+        {
+            List<string> result = new List<string>(); // Create a new list to store the report
+            List<Book> books = GetBooks(title, author, onlyAvalible, report);
+            foreach (Book book in books)
+            {
+                Customer borrowCustomer = Customers.Find(c => c.BorrowedBooks.Contains(book)); // Find the customer who borrowed the book
+                Customer reserveCustomer = Customers.Find(c => c.ReservedBookISBN == book.ISBN); // Find the customer who reserved the book
+                if (reserveCustomer != null)
+                {
+                    // Format the report string for each book
+                    result.Add($"{book.BookReport} {borrowCustomer.Report()} | Reserved By: {reserveCustomer.Report()}");
+                }
+                else if (borrowCustomer != null)
+                {
+                    result.Add($"{book.BookReport} {borrowCustomer.Report()}"); // Format the report string for each book
+                }
+            }
+            return result; // Return the list of reports for all books
         }
     }
 }

@@ -456,7 +456,7 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
-        <Grid x:Name="SeeAllBooksGrid" Grid.Column="1" Visibility="Collapsed">
+        <Grid x:Name="SeeAllBooksGrid" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -499,9 +499,27 @@
                       Grid.Row="1"
                       VerticalAlignment="Center" 
                       Click="SearchAvalibleCheckBox_Toggle">
-                <TextBlock Text="Show Only Avalible Books" Foreground="#FFFAFAFA"/>
+                <TextBlock Text="Show Only Avalible Books" 
+                           Foreground="#FFFAFAFA"/>
             </CheckBox>
-            <ListView x:Name="SearchedBooksListView" Grid.Row="2">
+            <CheckBox x:Name="GenerateReportCheckBox" 
+                    Margin="50,0,0,0" 
+                    Grid.Row="1"
+                    HorizontalAlignment="Left"
+                    Click="GenerateReportCheckBox_Toggle">
+                <TextBlock Text="Generate a Report On All Borrowed Books" 
+                           Foreground="#FFFAFAFA"/>
+            </CheckBox>
+            <ListView x:Name="SearchedBooksListView" Grid.Row="2" Visibility="Collapsed">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" 
+                                   Foreground="#FFFAFAFA" 
+                                   FontSize="16"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <ListView x:Name="ReportListView" Grid.Row="2">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding}" 

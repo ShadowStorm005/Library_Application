@@ -467,12 +467,15 @@ namespace Library_application
             // Toggle the visibility of the SeeAllBooksGrid
             ToggleGridVisibility(SeeAllBooksGrid, sender, e);
             // Update the list of all books and clear the search text boxes
-            SearchedBooksListView.ItemsSource = null; // Reset the list view
+            SearchedBooksListView.Visibility = Visibility.Visible; // Show the list view
+            ReportListView.Visibility = Visibility.Collapsed; // Hide the report list view
             SearchedBooksListView.ItemsSource = libraryLogic.GetBooks(); // Set the list view source to the list of all books
             SearchedBooksListView.SelectedIndex = -1; // Deselect any selected item
             SearchBookTitleTextBox.Text = string.Empty; // Clear the title search text box
             SearchBookAuthorTextBox.Text = string.Empty; // Clear the author search text box
             SearchAvalibleCheckBox.IsChecked = false; // Uncheck the available books checkbox
+            SearchAvalibleCheckBox.IsEnabled = true; // Enable the checkbox
+            GenerateReportCheckBox.IsChecked = false; // Uncheck the generate report checkbox
         }
         // SearchedBooksListView_FilterUpdate event handler
         private void SearchedBooksListView_FilterUpdate(object sender, TextChangedEventArgs e)
@@ -481,6 +484,11 @@ namespace Library_application
             SearchedBooksListView.ItemsSource = libraryLogic.GetBooks(SearchBookTitleTextBox.Text, 
                                                                     SearchBookAuthorTextBox.Text, 
                                                                     (bool)SearchAvalibleCheckBox.IsChecked);
+            // Update the list to filter the books by title and author for the report
+            ReportListView.ItemsSource = libraryLogic.GetReport(SearchBookTitleTextBox.Text, 
+                                                                SearchBookAuthorTextBox.Text, 
+                                                                (bool)SearchAvalibleCheckBox.IsChecked,
+                                                                (bool)GenerateReportCheckBox.IsChecked);
         }
         // SearchAvalibleCheckBox_Toggle event handler
         private void SearchAvalibleCheckBox_Toggle(object sender, RoutedEventArgs e)
@@ -490,12 +498,37 @@ namespace Library_application
                                                                     SearchBookAuthorTextBox.Text, 
                                                                     (bool)SearchAvalibleCheckBox.IsChecked);
         }
+        // GenerateReportButton_Click event handler
+        private void GenerateReportCheckBox_Toggle(object sender, RoutedEventArgs e)
+        {
+            // Hide the SearchedBooksListView to show the ReportListView with all borrowed books in the library
+            SearchAvalibleCheckBox.IsChecked = false; // Uncheck the available books checkbox
+            ReportListView.ItemsSource = libraryLogic.GetReport(SearchBookTitleTextBox.Text,
+                                                            SearchBookAuthorTextBox.Text,
+                                                            (bool)SearchAvalibleCheckBox.IsChecked,
+                                                            (bool)GenerateReportCheckBox.IsChecked);
+            SearchedBooksListView.ItemsSource = libraryLogic.GetBooks(SearchBookTitleTextBox.Text,
+                                                                    SearchBookAuthorTextBox.Text,
+                                                                    (bool)SearchAvalibleCheckBox.IsChecked);
+            // Switch The SearchAvalibleCheckBox on/off and toggle the visibility of the list views
+            if (SearchAvalibleCheckBox.IsEnabled)
+            {
+                SearchAvalibleCheckBox.IsEnabled = false; // Disable the checkbox
+                SearchedBooksListView.Visibility = Visibility.Collapsed; // Hide the searched books list view
+                ReportListView.Visibility = Visibility.Visible; // Show the report list view
+            }
+            else
+            {
+                SearchAvalibleCheckBox.IsEnabled = true; // Enable the checkbox
+                SearchedBooksListView.Visibility = Visibility.Visible; // Show the searched books list view
+                ReportListView.Visibility = Visibility.Collapsed; // Hide the report list view
+            }
+        }
 
         // ExitButton_Click event handler
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             App.Current.Exit(); // Close the application
         }
-
     }
 }

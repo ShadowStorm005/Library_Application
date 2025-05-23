@@ -85,6 +85,10 @@ namespace Library_application
         {
             get { return GetDetails(); }
         }
+        public string BookReport // Property to get book details when displaying the book in a report
+        {
+            get { return $"{Title} | {Author} | {ISBN} | Borrowed By:"; }
+        }
 
         // Method to loan the book
         internal bool Borrow()
