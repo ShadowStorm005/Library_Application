@@ -488,7 +488,7 @@
                      Background="#FF3D3D3D" 
                      BorderBrush="#FF666666" 
                      Foreground="#FFFAFAFA" 
-                     PlaceholderText="Search For An Auhor" 
+                     PlaceholderText="Search For An Author" 
                      PlaceholderForeground="#FFFAFAFA" 
                      Height="32" 
                      Width="150" 

@@ -99,8 +99,8 @@ namespace Library_application
             }
             BorrowedBooks.Add(book);
         }
-        // Method to return a book
-        internal void ReturnBook(Book book)
+        // Method to return a book and recieve an int representation of the time in minutes the book was borrowed for
+        internal int ReturnBook(Book book)
         {
             if (book == null) // Book cannot be null
             {
@@ -110,8 +110,10 @@ namespace Library_application
             {
                 throw new InvalidOperationException("Book is not borrowed by this customer.");
             }
+            int borrowedTimeSpan = book.GetBorrowedTimeSpan(); // Get the overdue time in minutes
             book.Return(); // Return the book
             BorrowedBooks.Remove(book); // Remove the book from the borrowed list
+            return borrowedTimeSpan;
         }
         // Method to reserve a book
         internal void ReserveBook(Book book)

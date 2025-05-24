@@ -222,7 +222,14 @@ namespace Library_application
             Customer customer = Customers.Find(c => c.ID == customerId);
             if (bookToReturn != null && customer != null)
             {
-                customer.ReturnBook(bookToReturn); // Return the book from the specified customer
+                // Return the book from the specified customer and receive the time in minutes the book was borrowed for
+                int borrowedTimeSpan = customer.ReturnBook(bookToReturn);
+                // If the book was borrowed for more than 2 minutes, throw an exception
+                if (borrowedTimeSpan > 2) // Change this value to the desired limit for maximum borrowing time in minutes
+                {
+                    throw new InvalidTimeZoneException($"Book was borrowed for {borrowedTimeSpan} minutes, " +
+                        $"which is more than the allowed time of 2 minutes. \nLate fees: {borrowedTimeSpan * 10} kr");
+                }
             }
             else if (bookToReturn == null)
             {

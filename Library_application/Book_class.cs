@@ -9,6 +9,7 @@ namespace Library_application
         private string _isbn; // ISBN 13 number without any number separators
         private bool _isAvailable;
         private bool _isReserved; // Reserved books are not available for borrowing
+        private string _borrowedTime; // Time when the book was borrowed, HH:mm format
 
         // Constructor
         internal Book(string title, string author, string isbn)
@@ -17,6 +18,8 @@ namespace Library_application
             Author = author;
             ISBN = isbn;
             IsAvailable = true; // New books are available by default
+            IsReserved = false; // New books are not reserved by default
+            BorrowedTime = string.Empty; // New books have no borrowed time by default
         }
 
         // Properties
@@ -81,6 +84,21 @@ namespace Library_application
             get { return _isReserved; }
             set { _isReserved = value; }
         }
+        internal string BorrowedTime // Property to get and set the time when the book was borrowed
+        {
+            get { return _borrowedTime; }
+            set
+            {
+                if (value == string.Empty || DateTime.TryParseExact(value, "HH:mm", null, System.Globalization.DateTimeStyles.None, out _))
+                {
+                    _borrowedTime = value; // Set the borrowed time if it's a valid format
+                }
+                else
+                {
+                    throw new FormatException("Borrowed time must be in a valid time format or an empty string.");
+                }
+            }
+        }
         public string Details // Property to get book details when displaying the book in a list
         {
             get { return GetDetails(); }
@@ -100,6 +118,7 @@ namespace Library_application
             else
             {
                 IsAvailable = false;
+                BorrowedTime = DateTime.Now.ToString("HH:mm"); // Set the current time as borrowed time
                 return true; // Book is successfully borrowed
             }
         }
@@ -111,6 +130,18 @@ namespace Library_application
                 throw new InvalidOperationException("Book is already available.");
             }
             IsAvailable = true;
+            BorrowedTime = string.Empty; // Clear the borrowed time when returning the book
+        }
+        // Method to return an int representation of the amount of time in minutes the book was borrowed for
+        internal int GetBorrowedTimeSpan()
+        {
+            if (IsAvailable)
+            {
+                return 0; // Book is not borrowed, so no overdue time
+            }
+            DateTime borrowedTime = DateTime.ParseExact(BorrowedTime, "HH:mm", null);
+            TimeSpan timeSpan = DateTime.Now - borrowedTime;
+            return (int)timeSpan.TotalMinutes; // Return the overdue time in minutes
         }
         // Method to reserve the book
         internal bool Reserve()

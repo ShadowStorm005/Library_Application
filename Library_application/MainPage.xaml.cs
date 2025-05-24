@@ -306,7 +306,9 @@ namespace Library_application
                     selectedBook.ISBN,
                     LendOutBookCustomerIDTextBox.Text);
                 // Display a success message
-                var successMessage = new Windows.UI.Popups.MessageDialog("Book was borrowed successfully!", "Success");
+                var successMessage = new Windows.UI.Popups.MessageDialog($"Book was borrowed successfully!\n" +
+                                                                        $"Time: {selectedBook.BorrowedTime}", 
+                                                                        "Success");
                 _ = successMessage.ShowAsync();
                 // Hide the LendBookToCustomerGrid and clear the input fields
                 LendBookToCustomerButton_Click(sender, e);
@@ -320,6 +322,12 @@ namespace Library_application
             catch (InvalidOperationException ex)
             {
                 // Display an error message if the book is not available for borrowing
+                var error = new Windows.UI.Popups.MessageDialog(ex.Message, "Error");
+                _ = error.ShowAsync();
+            }
+            catch (FormatException ex)
+            {
+                // Display an error message if the format of the input is incorrect
                 var error = new Windows.UI.Popups.MessageDialog(ex.Message, "Error");
                 _ = error.ShowAsync();
             }
@@ -415,7 +423,7 @@ namespace Library_application
                     ReturnBookISBNTextBox.Text,
                     ReturnBookCustomerIDTextBox.Text);
                 // Display a success message
-                var successMessage = new Windows.UI.Popups.MessageDialog("Book was returned successfully!", "Success");
+                var successMessage = new Windows.UI.Popups.MessageDialog("Book was returned successfully on time!", "Success");
                 _ = successMessage.ShowAsync();
                 // Hide the ReturnBookFromCustomerGrid and clear the input fields
                 ReturnBookFromCustomerButton_Click(sender, e);
@@ -431,6 +439,14 @@ namespace Library_application
                 // Display an error message if the book is not borrowed by the customer
                 var error = new Windows.UI.Popups.MessageDialog(ex.Message, "Error");
                 _ = error.ShowAsync();
+            }
+            catch (InvalidTimeZoneException ex)
+            {
+                // Display an error message for the situation when the book was borrowed for too long
+                var message = new Windows.UI.Popups.MessageDialog(ex.Message, "Book Returned");
+                _ = message.ShowAsync();
+                // Hide the ReturnBookFromCustomerGrid and clear the input fields
+                ReturnBookFromCustomerButton_Click(sender, e);
             }
             catch (Exception ex)
             {
