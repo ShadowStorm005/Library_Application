@@ -385,6 +385,12 @@ namespace Library_application
                 // Hide the LendBookToCustomerGrid and clear the input fields
                 LendBookToCustomerButton_Click(sender, e);
             }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                // Display an error message if the error raising value is out of range
+                var error = new Windows.UI.Popups.MessageDialog(ex.ParamName, "Error");
+                _ = error.ShowAsync();
+            }
             catch (ArgumentException ex)
             {
                 // Display an error message if the input value is incorrect

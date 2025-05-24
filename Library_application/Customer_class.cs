@@ -16,6 +16,7 @@ namespace Library_application
             Name = name;
             ID = id;
             BorrowedBooks = new List<Book>();
+            ReservedBookISBN = string.Empty; // Reserved book's ISBN is empty by default
         }
 
         // Properties
@@ -75,12 +76,15 @@ namespace Library_application
             get { return _reservedBookISBN; }
             set
             {
-                if (!ulong.TryParse(value, out _) ||
-                    value.Length != 13 ||
-                    value.StartsWith("-") ||
-                    value.StartsWith("+"))
+                if (value != string.Empty)
                 {
-                    throw new ArgumentException("ISBN must be a 13-digit number without any separators.");
+                    if (!ulong.TryParse(value, out _) ||
+                        value.Length != 13 ||
+                        value.StartsWith("-") ||
+                        value.StartsWith("+"))
+                    {
+                        throw new ArgumentException("ISBN must be a 13-digit number without any separators.");
+                    }
                 }
                 _reservedBookISBN = value;
             }

@@ -249,7 +249,11 @@ namespace Library_application
             {
                 if (!bookToReserve.IsReserved && customer.BorrowedBooks.Contains(bookToReserve))
                 {
-                    throw new ArgumentException("Book is already borrowed for this customer.");
+                    throw new ArgumentException("Book is already borrowed by this customer. Cannot reserve.");
+                }
+                else if (customer.ReservedBookISBN != string.Empty && customer.ReservedBookISBN != bookToReserve.ISBN)
+                {
+                    throw new ArgumentOutOfRangeException("Customer already has a reserved book. Cannot reserve another book.");
                 }
                 else
                 {
