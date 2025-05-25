@@ -148,7 +148,7 @@
                      Background="#FF3D3D3D" 
                      BorderBrush="#FF666666" 
                      Foreground="#FFFAFAFA" 
-                     PlaceholderText="Enter a Unique ISBN Number For The New Book" 
+                     PlaceholderText="Enter a Unique 13-Digit ISBN Number For The New Book" 
                      PlaceholderForeground="#FFFAFAFA"/>
             <Button x:Name="AddNewBookToLibraryButton" 
                     Content="Register The Book To The Library" 
@@ -180,7 +180,7 @@
                      Background="#FF3D3D3D" 
                      BorderBrush="#FF666666" 
                      Foreground="#FFFAFAFA" 
-                     PlaceholderText="Enter The ISBN Of The Book To Be Removed" 
+                     PlaceholderText="Enter The 13-Digit ISBN Of The Book To Be Removed" 
                      PlaceholderForeground="#FFFAFAFA"/>
             <Button x:Name="RemoveBookFromLibraryButton" 
                     Content="Remove The Book From The Library" 
@@ -223,7 +223,7 @@
                      Background="#FF3D3D3D" 
                      BorderBrush="#FF666666" 
                      Foreground="#FFFAFAFA" 
-                     PlaceholderText="Enter The ID Of The New Customer" 
+                     PlaceholderText="Enter The 6-Digit ID Of The New Customer" 
                      PlaceholderForeground="#FFFAFAFA"/>
             <Button x:Name="AddNewCustomerToLibraryButton" 
                     Content="Register The Customer To The Library" 
@@ -255,7 +255,7 @@
                      Background="#FF3D3D3D" 
                      BorderBrush="#FF666666" 
                      Foreground="#FFFAFAFA" 
-                     PlaceholderText="Enter The ID Of The Customer To Be Removed" 
+                     PlaceholderText="Enter The 6-Digit ID Of The Customer To Be Removed" 
                      PlaceholderForeground="#FFFAFAFA"/>
             <Button x:Name="RemoveCustomerFromLibraryButton" 
                     Content="Remove The Customer From The Library" 
@@ -275,7 +275,7 @@
             </Grid.RowDefinitions>
             <TextBlock HorizontalAlignment="Center" 
                        TextWrapping="Wrap" 
-                       Text="Enter a Customer ID And Select a Book You Wish To Borrow or Reserve" 
+                       Text="Enter a 6-Digit Customer ID And Select a Book You Wish To Borrow or Reserve" 
                        VerticalAlignment="Center"
                        Foreground="#FFFAFAFA"/>
             <TextBlock HorizontalAlignment="Left" 
@@ -292,9 +292,9 @@
                      Background="#FF3D3D3D" 
                      BorderBrush="#FF666666" 
                      Foreground="#FFFAFAFA" 
-                     PlaceholderText="Enter The ID Of The Customer That Will Borrow The Book" 
+                     PlaceholderText="Enter The 6-Digit ID Of The Customer That Will Borrow The Book" 
                      PlaceholderForeground="#FFFAFAFA" 
-                     Margin="50,0,0,0"/>
+                     Margin="30,0,0,0"/>
             <TextBox x:Name="LendOutSearchBookTitleTextBox" 
                      HorizontalAlignment="Right" 
                      Margin="0,0,50,0" 
@@ -378,7 +378,7 @@
                      Background="#FF3D3D3D" 
                      BorderBrush="#FF666666" 
                      Foreground="#FFFAFAFA" 
-                     PlaceholderText="Enter The ISBN Of The Book To Be Returned" 
+                     PlaceholderText="Enter The 13-Digit ISBN Of The Book To Be Returned" 
                      PlaceholderForeground="#FFFAFAFA"/>
             <TextBox x:Name="ReturnBookCustomerIDTextBox" 
                      HorizontalAlignment="Center" 
@@ -388,7 +388,7 @@
                      Background="#FF3D3D3D" 
                      BorderBrush="#FF666666" 
                      Foreground="#FFFAFAFA" 
-                     PlaceholderText="Enter The ID Of The Customer That Is Returning The Book" 
+                     PlaceholderText="Enter The 6-Digit ID Of The Customer That Is Returning The Book" 
                      PlaceholderForeground="#FFFAFAFA"/>
             <Button x:Name="ReturnBookButton" 
                     Content="Return Book" 

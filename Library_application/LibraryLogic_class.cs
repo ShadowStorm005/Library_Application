@@ -176,13 +176,21 @@ namespace Library_application
         public void RemoveBook(string isbn)
         {
             Book bookToRemove = AllBooks.Find(b => b.ISBN == isbn);
-            if (bookToRemove != null && bookToRemove.IsAvailable)
+            if (bookToRemove != null && bookToRemove.IsAvailable && !bookToRemove.IsReserved)
             {
                 AllBooks.Remove(bookToRemove); // Remove the book from the list of all books
             }
-            else
+            else if (bookToRemove == null)
             {
-                throw new ArgumentException("Book not found, or not avalible.");
+                throw new ArgumentException("Book not found.");
+            }
+            else if (!bookToRemove.IsAvailable)
+            {
+                throw new ArgumentException("Book is currently borrowed and cannot be removed.");
+            }
+            else if (bookToRemove.IsReserved)
+            {
+                throw new ArgumentException("Book is currently reserved and cannot be removed.");
             }
         }
         // Method to borrow a book to a specified customer
@@ -286,7 +294,7 @@ namespace Library_application
         public void RemoveCustomer(string id)
         {
             Customer customerToRemove = Customers.Find(c => c.ID == id);
-            if (customerToRemove != null && customerToRemove.BorrowedBooks.Count == 0)
+            if (customerToRemove != null && customerToRemove.BorrowedBooks.Count == 0 && customerToRemove.ReservedBookISBN == string.Empty)
             {
                 Customers.Remove(customerToRemove); // Remove the customer from the list of all customers
             }
@@ -297,6 +305,10 @@ namespace Library_application
             else if (customerToRemove.BorrowedBooks.Count > 0)
             {
                 throw new ArgumentException("Customer has borrowed books and cannot be removed.");
+            }
+            else if (customerToRemove.ReservedBookISBN != string.Empty)
+            {
+                throw new ArgumentException("Customer has reserved books and cannot be removed.");
             }
         }
         // Method to get info about a specified book
